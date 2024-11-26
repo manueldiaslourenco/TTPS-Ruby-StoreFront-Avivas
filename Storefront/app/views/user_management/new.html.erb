@@ -1,0 +1,53 @@
+<% content_for :title do %>
+  Crear Usuario
+<% end %>
+
+<%= render 'shared/navbar_admin' %>
+
+<h2>Crear un Nuevo Usuario</h2>
+
+<%= form_for(@user, url: admin_users_path) do |f| %>
+  <%= render "devise/shared/error_messages", resource: @user %>
+
+  <!-- Campo para el correo electrónico -->
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, required: true %>
+  </div>
+
+  <!-- Campo para el nombre de usuario -->
+  <div class="field">
+    <%= f.label :username %><br />
+    <%= f.text_field :username, required: true %>
+  </div>
+
+  <!-- Campo para el teléfono -->
+  <div class="field">
+    <%= f.label :phone %><br />
+    <%= f.telephone_field :phone, required: true %>
+  </div>
+
+  <!-- Campo para la contraseña -->
+  <div class="field">
+    <%= f.label :password %><br />
+    <%= f.password_field :password, required: true %>
+  </div>
+
+  <!-- Campo para la confirmación de la contraseña -->
+  <div class="field">
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation, required: true %>
+  </div>
+
+  <!-- Campo para el rol del usuario (puedes cambiarlo según lo que necesites) -->
+  <div class="field">
+    <%= f.label :role %><br />
+    <%= f.select :role, [["Empleado", 0], ["Gerente", 1], ["Administrador", 2]], prompt: "Seleccione un rol" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Crear Usuario" %>
+  </div>
+<% end %>
+
+<%= link_to "Volver", admin_users_path %>

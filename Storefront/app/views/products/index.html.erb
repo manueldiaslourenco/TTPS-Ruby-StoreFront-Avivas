@@ -1,0 +1,32 @@
+<%= render 'shared/navbar_admin' %>
+
+<h1>Lista de Productos</h1>
+
+<% if @products.present? %>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Stock</th>
+      <th>Category</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @products.each do |product| %>
+      <tr>
+        <td><%= product.name %></td>
+        <td><%= number_to_currency(product.price) %></td>
+        <td><%= product.stock %></td>
+        <td><%= product.category %></td>
+        <td>
+          <%= link_to 'Ver mas', product_path(product), class: 'btn btn-primary' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% else %>
+    <h2>No hay Productos registrados.</h2>
+<% end %>

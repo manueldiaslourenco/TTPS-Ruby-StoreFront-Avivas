@@ -2,11 +2,9 @@
   Inicio
 <% end %>
 
-<h1>Main#index</h1>
+<%= render 'shared/navbar_public' %>
+
+<h1>Bienvenido a Storefront</h1>
 <p>Find me in app/views/main/index.html.erb</p>
 
 
-
-<%= link_to "Editar perfil", edit_user_registration_path, class: "btn btn-primary" %>
-
-<%= button_to "Cerrar sesión", destroy_user_session_path, method: :delete, class: "btn btn-danger" %>

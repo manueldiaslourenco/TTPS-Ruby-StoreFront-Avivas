@@ -1,0 +1,24 @@
+<%= render 'shared/navbar_public' %>
+
+<h1>Detalle del producto</h1>
+
+<%= image_tag @product.image, 
+    style: "width: 300px; 
+            height: 250px;" if @product.image.attached? %>
+
+<p><strong>Name:</strong> <%= @product.name %></p>
+<p><strong>Description:</strong> <%= @product.description %></p>
+<p><strong>Price:</strong> <%= number_to_currency(@product.price) %></p>
+<p><strong>Stock:</strong> <%= @product.stock %></p>
+<%= form_with(model: @product, url: update_stock_product_path(@product), method: :patch, local: true) do |form| %>
+  <div class="field">
+    <%= form.label :stock, "Actualizar Stock" %>
+    <%= form.number_field :stock, value: @product.stock %>
+    <%= form.submit "Actualizar Stock" %>
+  </div>
+<% end %>
+<p><strong>Category:</strong> <%= @product.category %></p>
+<p><strong>Size:</strong> <%= @product.size.presence || 'No especificado' %></p>
+<p><strong>Color:</strong> <%= @product.color.presence || 'No especificado' %></p>
+
+<%= link_to 'Vuelta a la lista de productos', products_path, class: 'btn btn-secondary' %>

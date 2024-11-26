@@ -1,0 +1,10 @@
+<% content_for :title do %>
+  Admin
+<% end %>
+
+<%= render 'shared/navbar_admin' %>
+
+<h1>Bienvenido a la administracion.</h1>
+<p>Find me in app/views/main/index.html.erb</p>
+
+<%= link_to "Listado de usuarios", admin_users_path %>
