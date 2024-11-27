@@ -65,3 +65,5 @@ end
 gem "devise", "~> 4.9"
 
 gem "strong_password", "~> 0.0.10"
+
+gem "ransack", "~> 4.2"

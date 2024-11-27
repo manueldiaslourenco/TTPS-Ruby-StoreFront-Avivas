@@ -7,15 +7,13 @@
     </div>
 
     <div class="navbar-menu">
-      <%= link_to "Inicio", "#" , class: "nav-link" %>
-      <%= link_to "Productos", "#", class: "nav-link" %>
-      <%= link_to "Contacto", "#", class: "nav-link" %>
-      <% if user_signed_in? %>
-        <%= link_to "Admin", admin_path, class: "nav-link" %>
-      <% end %>
     </div>
-    <% if user_signed_in? %>
+
+    <%= link_to "Admin", admin_path, class: "nav-link admin-link" %>
+
     <div class="navbar-user-menu">
+    <% if user_signed_in? %>
+
         <div class="menu-icon">
             <!-- Ícono SVG -->
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

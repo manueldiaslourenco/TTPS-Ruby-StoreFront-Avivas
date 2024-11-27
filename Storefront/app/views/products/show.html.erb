@@ -1,3 +1,7 @@
+<% content_for :title do %>
+  Detalle producto
+<% end %>
+
 <%= render 'shared/navbar_public' %>
 
 <h1>Detalle del producto</h1>
@@ -17,7 +21,7 @@
     <%= form.submit "Actualizar Stock" %>
   </div>
 <% end %>
-<p><strong>Category:</strong> <%= @product.category %></p>
+<p><strong>Category:</strong> <%= @product.category.name %></p>
 <p><strong>Size:</strong> <%= @product.size.presence || 'No especificado' %></p>
 <p><strong>Color:</strong> <%= @product.color.presence || 'No especificado' %></p>
 

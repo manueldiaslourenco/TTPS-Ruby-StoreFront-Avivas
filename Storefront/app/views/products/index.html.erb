@@ -2,6 +2,8 @@
 
 <h1>Lista de Productos</h1>
 
+<%= link_to 'Nuevo Producto', new_product_path %>
+
 <% if @products.present? %>
 <table>
   <thead>
@@ -19,9 +21,12 @@
         <td><%= product.name %></td>
         <td><%= number_to_currency(product.price) %></td>
         <td><%= product.stock %></td>
-        <td><%= product.category %></td>
+        <td><%= product.category.name %></td>
         <td>
           <%= link_to 'Ver mas', product_path(product), class: 'btn btn-primary' %>
+          <%= form_with model: product, url: product_path(product), method: :delete, data: { confirm: "¿Estás seguro?" } do %>
+            <%= submit_tag "Eliminar", class: "btn btn-danger" %>
+          <% end %>
         </td>
       </tr>
     <% end %>

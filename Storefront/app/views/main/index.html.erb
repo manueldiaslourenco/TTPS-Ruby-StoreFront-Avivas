@@ -4,7 +4,42 @@
 
 <%= render 'shared/navbar_public' %>
 
-<h1>Bienvenido a Storefront</h1>
-<p>Find me in app/views/main/index.html.erb</p>
+<div class="page-container">
+  <div class="sidebar-home">
+    <div class="sidebar-section">
+      <h3 class="sidebar-title">Buscar</h3>
+      <%= search_form_for @query, url: root_path, method: :get do |f| %>
+        <div class="search-container">
+          <%= f.text_field :name_or_description_cont, placeholder: "Introduce una palabra clave", class: "search-input" %>
+        </div>
+    </div>
 
+    <div class="sidebar-section">
+      <h3 class="sidebar-title">Categorías</h3>
+      <div class="category-list">
+        <%= f.collection_select :category_id_eq, Category.all, :id, :name, { include_blank: "Todas las categorías" }, { selected: params.dig(:q, :category_id_eq), class: "category-select" } %>
+      </div>
+    </div>
 
+    <div class="sidebar-section">
+      <%= f.submit "Buscar", class: "btn btn-primary search-submit" %>
+    </div>
+    <% end %>
+  </div>
+  <div class="content-container">
+    <div class="product-grid">
+      <% @products.each do |product| %>
+        <a href="<%= product_path(product) %>" class="product-card">
+          <div class="product-image">
+            <%= image_tag product.image, alt: product.name %>
+          </div>
+          <div class="product-info">
+            <h3><%= product.name %></h3>
+            <p class="product-description"><%= truncate(product.description, length: 80, omission: '...') %></p>
+            <p><%= number_to_currency(product.price) %></p>
+          </div>
+        </a>
+      <% end %>
+    </div>
+  </div>
+</div>

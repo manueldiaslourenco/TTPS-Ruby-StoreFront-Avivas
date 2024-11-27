@@ -1,9 +1,9 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:show, :edit, :update, :update_stock]
+  before_action :set_product, only: [:show, :edit, :update, :update_stock, :destroy]
 
   # GET /products
   def index
-    @products = Product.all
+    @products = Product.active
   end
 
   # GET /products/:id
@@ -41,13 +41,20 @@ class ProductsController < ApplicationController
   def update_stock
 
     if @product.update(stock_params)
-      redirect_to @product, notice: 'Stock was successfully updated.'
+      redirect_to @product, notice: 'Stock actualizado exitosamente.'
     else
-      flash.now[:alert] = "Error: " + @product.errors.full_messages.join(", ")
-      render :show # Regresa a la vista de detalle si algo sale mal
+      render :show
     end
   end
 
+  def destroy
+    if @product.soft_delete
+      flash[:notice] = "Producto eliminado con éxito."
+    else
+      flash[:alert] = "No se pudo eliminar el producto."
+    end
+    redirect_to products_path
+  end
 
   private
 
@@ -56,7 +63,7 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-    params.require(:product).permit(:name, :description, :price, :stock, :category, :size, :color, :image)
+    params.require(:product).permit(:name, :description, :price, :stock, :category_id, :size, :color, :image)
   end
 
   def stock_params
