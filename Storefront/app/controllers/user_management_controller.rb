@@ -4,7 +4,8 @@ class UserManagementController < ApplicationController
 
 
   def index
-    @users = User.active.where.not(id: current_user.id)
+    #@users = User.active.where.not(id: current_user.id)
+    @users= User.all
   end
   
   def new
