@@ -1,5 +1,7 @@
 class ProductsController < ApplicationController
+  before_action :authenticate_user!, except: [:show]
   before_action :set_product, only: [:show, :edit, :update, :update_stock, :destroy]
+  load_and_authorize_resource
 
   # GET /products
   def index
@@ -39,7 +41,7 @@ class ProductsController < ApplicationController
   end
 
   def update_stock
-
+    
     if @product.update(stock_params)
       redirect_to @product, notice: 'Stock actualizado exitosamente.'
     else
