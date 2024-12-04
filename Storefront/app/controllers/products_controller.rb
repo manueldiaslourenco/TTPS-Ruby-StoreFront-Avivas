@@ -5,7 +5,8 @@ class ProductsController < ApplicationController
 
   # GET /products
   def index
-    @products = Product.active
+    @query = Product.ransack(params[:q])
+    @products = @query.result.includes(:category).active.page(params[:page])
   end
 
   # GET /products/:id
@@ -19,10 +20,11 @@ class ProductsController < ApplicationController
 
   # POST /products
   def create
-    @product = Product.new(product_params)
+    @product = Product.new(product_params.except(:remove_images))
     if @product.save
       redirect_to @product, notice: 'El producto fue creado exitosamente.'
     else
+      flash.now[:error] = 'Hubo un problema al crear el producto.'
       render :new, status: :unprocessable_entity
     end
   end
@@ -31,29 +33,56 @@ class ProductsController < ApplicationController
   def edit
   end
 
-  # PATCH/PUT /products/:id
   def update
-    if @product.update(product_params)
-      redirect_to @product, notice: 'El producto fue actualizado exitosamente.'
-    else
+    ActiveRecord::Base.transaction do
+      # Validar que no se eliminen todas las imágenes sin agregar nuevas
+      if params[:product][:remove_images].present?
+        remaining_images = @product.images.count - params[:product][:remove_images].size
+        new_images = params[:product][:images].present? && params[:product][:images].reject(&:blank?).any?
+        
+        if remaining_images.zero? && !new_images
+          flash.now[:error] = "No puedes eliminar todas las imágenes sin agregar al menos una nueva."
+          raise ActiveRecord::Rollback
+        else
+          # Proceder a eliminar las imágenes marcadas
+          params[:product][:remove_images].each do |image_id|
+            @product.images.find(image_id).purge
+          end
+        end
+      end
+  
+      # Intentar actualizar el producto con nuevos datos
+      if @product.update(product_params.except(:remove_images))
+        flash[:success] = "El producto se actualizó correctamente."
+        redirect_to @product, success: 'El producto se actualizó correctamente.'
+      else
+        raise ActiveRecord::Rollback
+      end
+    end
+  
+    # Si algo falla, renderizar la edición con errores
+    if @product.errors.any?
+      flash[:error] = 'Hubo un problema al actualizar el producto.'
       render :edit, status: :unprocessable_entity
     end
   end
+  
 
   def update_stock
     
     if @product.update(stock_params)
-      redirect_to @product, notice: 'Stock actualizado exitosamente.'
+      redirect_to @product, success: 'Stock actualizado exitosamente.'
     else
+      flash[:error] = "No se pudo actualizar el stock."
       render :show
     end
   end
 
   def destroy
     if @product.soft_delete
-      flash[:notice] = "Producto eliminado con éxito."
+      flash[:success] = "Producto eliminado con éxito."
     else
-      flash[:alert] = "No se pudo eliminar el producto."
+      flash[:error] = "No se pudo eliminar el producto."
     end
     redirect_to products_path
   end
@@ -65,7 +94,7 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-    params.require(:product).permit(:name, :description, :price, :stock, :category_id, :size, :color, :image)
+    params.require(:product).permit(:name, :description, :price, :stock, :category_id, :size, :color, images: [], remove_images: [])
   end
 
   def stock_params

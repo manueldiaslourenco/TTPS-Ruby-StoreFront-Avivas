@@ -4,29 +4,79 @@
 
 <%= render 'shared/navbar_public' %>
 
-<h1>Detalle del producto</h1>
-
-<%= image_tag @product.image, 
-    style: "width: 300px; 
-            height: 250px;" if @product.image.attached? %>
-
-<p><strong>Name:</strong> <%= @product.name %></p>
-<p><strong>Description:</strong> <%= @product.description %></p>
-<p><strong>Price:</strong> <%= number_to_currency(@product.price) %></p>
-<p><strong>Stock:</strong></p>
-
-<% if can?(:update, @product) %>
-  <%= form_with(model: @product, url: update_stock_product_path(@product), method: :patch, local: true) do |form| %>
-    <div class="field">
-      <%= form.number_field :stock, value: @product.stock %>
-      <%= form.submit "Actualizar Stock" %>
+<div class="product-details-container">
+  <div class="product-image-carousel">
+    <div class="thumbnail-images">
+      <% @product.images.each do |image| %>
+        <%= image_tag image, alt: @product.name, class: 'thumbnail' %>
+      <% end %>
     </div>
-  <% end %>
-<% else %>
-  <%= @product.stock %>
-<% end %>
-<p><strong>Category:</strong> <%= @product.category.name %></p>
-<p><strong>Size:</strong> <%= @product.size.presence || 'No especificado' %></p>
-<p><strong>Color:</strong> <%= @product.color.presence || 'No especificado' %></p>
+    <div class="main-image">
+      <%= image_tag @product.images.first, alt: @product.name, width: 400, height: 400%>
+    </div>
+  </div>
+  
+  <div class="product-info-container">
+    <h1><%= @product.name %></h1>
+    <p><%= @product.description %></p>
+    <p class="price"><%= number_to_currency(@product.price) %></p>
+    
+    <div class="size-selector">
+      <label>Size:</label>
+      <% if @product.size.present? %>
+        <button class="active"><%= @product.size %></button>
+      <% else %>
+        <span>Not specified</span>
+      <% end %>
+    </div>
 
-<%= link_to 'Vuelta a la lista de productos', products_path, class: 'btn btn-secondary' %>
+    <div class="color">
+      <label>Color:</label>
+      <% if @product.color.present? %>
+        <p><%= @product.color %></p>
+      <% else %>
+        <span>No especificado</span>
+      <% end %>
+    </div>
+    
+    <div class="stock-info">
+      <% if can?(:update, @product) %>
+        <%= form_with(model: @product, url: update_stock_product_path(@product), method: :patch, local: true) do |form| %>
+          <label>Stock:</label>
+          <%= form.number_field :stock, value: @product.stock %>
+          <%= form.submit "Update Stock" %>
+        <% end %>
+      <% else %>
+        <p><label>Stock:</label><%= @product.stock %></p>
+      <% end %>
+      </p>
+    </div>
+    
+    <div class="actions">
+      <% if can?(:update, @product) %>
+        <%= link_to 'Editar', edit_product_path(@product), class: 'product-info-edit-btn' %>
+      <% end %>
+      <% if can?(:destroy, @product) %>
+        <%= form_with model: @product, url: product_path(@product), method: :delete do %>
+            <%= submit_tag "Eliminar", class: "product-info-delete-btn" %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="product-back-div">
+  <%= link_to 'Volver', request.referer || root_path, class: 'product-back-button' %>
+</div>
+
+<script>
+document.querySelectorAll('.thumbnail-images .thumbnail').forEach((thumbnail) => {
+  thumbnail.addEventListener('mouseover', () => {
+    document.querySelector('.main-image img').src = thumbnail.src;
+    document.querySelectorAll('.thumbnail-images .thumbnail').forEach((t) => {
+      t.classList.remove('active');
+    });
+    thumbnail.classList.add('active');
+  });
+});
+</script>

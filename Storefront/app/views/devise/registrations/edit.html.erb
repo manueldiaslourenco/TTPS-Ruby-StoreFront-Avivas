@@ -1,37 +1,61 @@
 <%= render 'shared/navbar_admin' %>
 
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<div class="product-edit-form-container">
+  <h1 class="product-edit-form-title">Editar Usuario</h1>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |form| %>
+    <div class="product-edit-form-group">
+      <%= form.label :email, "Mail", class: "product-edit-form-label" %>
+      <%= form.email_field :email, autofocus: true, required: true, value: resource.email, class: "product-edit-form-input" %>
+      <div class="product-edit-form-helper">
+        El mail elegido no debe estar en uso.
+      </div>
+    </div>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+      <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+    <% end %>
 
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+    <div class="product-edit-form-group">
+      <%= form.label :username, "Nombre de usuario", class: "product-edit-form-label" %>
+      <%= form.text_field :username, value: resource.username, required: true, class: "product-edit-form-input" %>
+      <div class="product-edit-form-helper">
+        El nombre de usuario elegido no debe estar en uso.
+      </div>
+    </div>
+
+    <div class="product-edit-form-group">
+      <%= form.label :phone, "Telefono", class: "product-edit-form-label" %>
+      <%= form.text_field :phone, required: true, value: resource.phone, class: "product-edit-form-input" %>
+    </div>
+
+    <div class="product-edit-form-group">
+      <%= form.label :password, "Contraseña nueva", class: "product-edit-form-label"  %> 
+      <%= form.password_field :password, class: "product-edit-form-input"  %>
+      <div class="product-edit-form-helper">
+        Deja el campo en blanco para no cambiarla.
+      </div>
+    </div>
+
+    <div class="product-edit-form-group">
+      <%= form.label :password_confirmation, "Confirmacion de la nueva contraseña", class: "product-edit-form-label"%> 
+      <%= form.password_field :password_confirmation, class: "product-edit-form-input"%>
+    </div>
+
+    <div class="product-edit-form-group">
+      <%= form.label :current_password, "Contraseña actual", class: "product-edit-form-label"  %> 
+      <%= form.password_field :current_password, class: "product-edit-form-input"  %>
+      <div class="product-edit-form-helper">
+        Necesitamos que ingreses tu contraseña actual para confirmar los cambios.
+      </div>
+    </div>
+
+    <div class="product-edit-form-group">
+      <%= form.submit "Editar", class: "product-edit-form-submit" %>
+    </div>
   <% end %>
+</div>
 
-  <div class="field">
-    <%= f.label :password %> <i>(Deja el campo en blanco para no cambiarla)</i><br />
-    <%= f.password_field :password %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation %>
-  </div>
-
-  <div class="field">
-    <%= f.label :current_password %> <i>(Necesitamos que ingreses tu contraseña actual para confirmar los cambios.)</i><br />
-    <%= f.password_field :current_password %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
-<% end %>
-
-<%= link_to "Back", :back %>
+<div class="product-back-div">
+  <%= link_to 'Volver', request.referer || root_path, class: 'product-back-button' %>
+</div>

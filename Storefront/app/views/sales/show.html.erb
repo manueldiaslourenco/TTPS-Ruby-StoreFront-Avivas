@@ -1,0 +1,24 @@
+<%= render 'shared/navbar_admin' %>
+
+<h1>Detalles de la Venta</h1>
+
+<p><strong>Venta ID:</strong> <%= @sale.id %></p>
+<p><strong>Fecha de Venta:</strong> <%= @sale.sale_date %></p>
+<p><strong>Total:</strong> <%= @sale.total_amount %> </p>
+
+<h3>Cliente</h3>
+<p><strong>DNI:</strong> <%= @sale.client.dni %></p>
+<p><strong>Nombre:</strong> <%= @sale.client.name %></p>
+<p><strong>Teléfono:</strong> <%= @sale.client.phone %></p>
+<p><strong>Email:</strong> <%= @sale.client.email %></p>
+
+<h3>Productos Vendidos</h3>
+<ul>
+  <% @sale.sale_items.each do |item| %>
+    <li>
+      <%= item.product.name %> (Cantidad: <%= item.quantity %>, Precio Unitario: <%= item.unit_price %>)
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to 'Volver', root_path %>

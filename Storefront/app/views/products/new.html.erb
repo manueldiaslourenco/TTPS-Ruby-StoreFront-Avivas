@@ -1,42 +1,61 @@
 <%= render 'shared/navbar_admin' %>
 
-<h1>Nuevo Producto</h1>
+<%= render 'shared/handler_alerts' %>
 
-<%= form_with model: @product, local: true do |form| %>
 
-  <div class="form-group">
-    <%= form.label :name %>
-    <%= form.text_field :name, required: true %>
-  </div>
+<div class="product-edit-form-container">
+  <h1 class="product-edit-form-title">Nuevo Producto</h1>
 
-  <div class="form-group">
-    <%= form.label :description %>
-    <%= form.text_area :description, required: true %>
-  </div>
+  <%= form_with model: @product, class: "product-edit-form" do |form| %>
+    <div class="product-edit-form-group">
+      <%= form.label :name, "Nombre", class: "product-edit-form-label" %>
+      <%= form.text_field :name, required: true, class: "product-edit-form-input" %>
+    </div>
 
-  <div class="form-group">
-    <%= form.label :price %>
-    <%= form.number_field :price, required: true %>
-  </div>
+    <div class="product-edit-form-group">
+      <%= form.label :description, "Descripción", class: "product-edit-form-label" %>
+      <%= form.text_area :description, required: true, class: "product-edit-form-text-area" %>
+    </div>
 
-  <div class="form-group">
-    <%= form.label :stock %>
-    <%= form.number_field :stock, required: true %>
-  </div>
+    <div class="product-edit-form-group">
+      <%= form.label :price, "Precio", class: "product-edit-form-label" %>
+      <%= form.number_field :price, step: "0.01", required: true, class: "product-edit-form-input" %>
+    </div>
 
-  <div class="form-group">
-    <%= form.label :category, "Categoría" %>
-    <%= form.collection_select :category_id, Category.all, :id, :name, prompt: "Selecciona una categoría", required: true %>
-  </div>
+    <div class="product-edit-form-group">
+      <%= form.label :stock, "Stock", class: "product-edit-form-label" %>
+      <%= form.number_field :stock, step: "1", required: true, class: "product-edit-form-input" %>
+    </div>
 
-  <%= form.label :size %>
-  <%= form.text_field :size %>
+    <div class="product-edit-form-group">
+      <%= form.label :category_id, "Categoría", class: "product-edit-form-label" %>
+      <%= form.collection_select :category_id, Category.all, :id, :name, { prompt: "Selecciona una categoría" }, class: "product-edit-form-input", required: true%>
+    </div>
 
-  <%= form.label :color %>
-  <%= form.text_field :color %>
+    <div class="product-edit-form-group">
+      <%= form.label :size, "Talle", class: "product-edit-form-label" %>
+      <%= form.text_field :size, class: "product-edit-form-input" %>
+    </div>
 
-  <%= form.label :image %>
-  <%= form.file_field :image, required: true %>
+    <div class="product-edit-form-group">
+      <%= form.label :color, "Color", class: "product-edit-form-label" %>
+      <%= form.text_field :color, class: "product-edit-form-input" %>
+    </div>
 
-  <%= form.submit %>
-<% end %>
+    <div class="product-edit-form-group">
+      <%= form.label :images, "Imágen/es", class: "product-edit-form-label" %>
+      <%= form.file_field :images, multiple: true, accept: 'image/png, image/jpeg, image/jpg', class: "product-edit-form-input" %>
+      <div class="product-edit-form-helper">
+        Las cantidad permitida de imagenes es 3.
+      </div>
+    </div>
+
+    <div class="product-edit-form-group">
+      <%= form.submit "Registrar", class: "product-edit-form-submit" %>
+    </div>
+  <% end %>
+</div>
+
+<div class="product-back-div">
+  <%= link_to 'Volver', request.referer || root_path, class: 'product-back-button' %>
+</div>

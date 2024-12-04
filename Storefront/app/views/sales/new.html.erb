@@ -1,0 +1,73 @@
+<%= render 'shared/navbar_admin' %>
+
+<h1>Nueva Venta</h1>
+
+  <!-- Formulario para agregar productos -->
+  <div>
+    <%= form_with url: update_products_list_sales_path, method: :post, local: true do |product_form| %>
+        <%= product_form.label :product_id, "Seleccionar Producto" %>
+        <%= select_tag :product_id, options_from_collection_for_select(@products, :id, :name, prompt: "Selecciona un producto") %>
+
+        <%= product_form.label :quantity, "Cantidad" %>
+        <%= product_form.number_field :quantity, min: 1, value: 1, required: true %>
+
+        
+        <%= product_form.submit "Agregar Producto" %>
+    <% end %>
+    <%= form_with url: clear_selected_products_sales_path, method: :post, local: true do |f| %>
+        <%= f.submit "Limpiar Productos Seleccionados", class: "btn btn-danger" %>
+    <% end %>
+  </div>
+
+  <div>
+    <h4>Productos Seleccionados</h4>
+    <table>
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Cantidad</th>
+          <th>Stock disponible</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% (@selected_products || []).each do |product| %>
+          <tr>
+            <td><%= product["name"] %></td>
+            <td><%= product["quantity"] %></td>
+            <td><%= product["stock_available"] %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+
+<%= form_with model: @sale, local: true do |f| %>
+  <h3>Datos del Cliente</h3>
+  <div>
+    <div>
+      <%= f.label :dni, "DNI" %>
+      <%= f.text_field :dni, value: params[:dni] || @client[:dni], required: true %>
+    </div>
+    <div>
+      <%= f.label :name, "Nombre" %>
+      <%= f.text_field :name, value: params[:name] || @client[:name], required: true %>
+    </div>
+    <div>
+      <%= f.label :phone, "Teléfono" %>
+      <%= f.text_field :phone, value: params[:phone] || @client[:phone], required: true %>
+    </div>
+    <div>
+      <%= f.label :email, "Correo" %>
+      <%= f.email_field :email, value: params[:email] || @client[:email], required: true %>
+    </div>
+
+    <h3>Fecha de la venta</h3>
+    <div>
+        <%= f.label :sale_date, "Fecha y Hora" %>
+        <%= f.datetime_local_field :sale_date, value: params[:sale_date] || @sale.sale_date, required: true %>
+    </div>
+  </div>
+
+  <%= f.submit "Crear Venta" %>
+<% end %>

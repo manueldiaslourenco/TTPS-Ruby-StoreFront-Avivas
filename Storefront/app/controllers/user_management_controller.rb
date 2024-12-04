@@ -1,11 +1,10 @@
 class UserManagementController < ApplicationController
   before_action :authenticate_user!
-  load_and_authorize_resource
+  load_and_authorize_resource :user, class: 'User'
 
 
   def index
-    #@users = User.active.where.not(id: current_user.id)
-    @users= User.all
+    @users = User.active.where.not(id: current_user.id).page(params[:page])
   end
   
   def new
@@ -14,6 +13,7 @@ class UserManagementController < ApplicationController
 
   def create
     @user = User.new(user_params)
+    authorize! :create, @user
     if @user.save
       redirect_to admin_users_path, notice: 'Usuario creado exitosamente.'
     else
@@ -24,15 +24,12 @@ class UserManagementController < ApplicationController
   def destroy
     user = User.find(params[:id])
     
-    # Cambiar la contraseña de manera aleatoria
-    random_password = SecureRandom.hex(8)  # Genera una contraseña aleatoria
+    authorize! :destroy, @user
+
+    random_password = SecureRandom.hex(8)
     user.update(password: random_password, password_confirmation: random_password)
     
-    # Realizar el borrado lógico
     user.soft_delete
-    
-    # Liberar el email y el username (lo haremos al "borrar" el usuario)
-    # user.update(email: "#{user.email.split('@').first}_deleted_#{Time.now.to_i}@example.com", username: "#{user.username}_deleted_#{Time.now.to_i}")
     
     redirect_to admin_users_path, notice: "Usuario desactivado correctamente"
   end

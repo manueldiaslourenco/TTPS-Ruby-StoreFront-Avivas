@@ -1,0 +1,35 @@
+<%= render 'shared/navbar_admin' %>
+
+
+<h1>Lista de Ventas</h1>
+
+<% if @sales.empty? %>
+  <p>No hay ventas registradas.</p>
+<% else %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Cliente</th>
+        <th>Fecha de Venta</th>
+        <th>Total</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @sales.each do |sale| %>
+        <tr>
+          <td><%= sale.id %></td>
+          <td><%= sale.client.name %></td>
+          <td><%= sale.sale_date.strftime("%d/%m/%Y") %></td>
+          <td><%= number_to_currency(sale.total_amount) %></td>
+          <td>
+            <%= form_with url: sale_path(sale), method: :delete, local: true, class: 'inline-form' do %>
+                <%= submit_tag 'Cancelar Venta', data: { confirm: '¿Estás seguro de que deseas cancelar esta venta?' }, class: 'btn btn-danger' %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

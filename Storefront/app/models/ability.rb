@@ -33,17 +33,19 @@ class Ability
 
 
     if user.admin?
-      can :manage, :all # Los administradores pueden hacer todo
+      can :manage, :all
     elsif user.manager?
-      can :manage, Product  # Los managers pueden eliminar artículos
+      can :manage, Product
       can :manage, User, role: [0, 1]
       cannot :create, User, role: 2
       cannot :destroy, User, role: 2
+      can :manage, Sale
     elsif user.employee?
       can :manage, Product
       can :update_stock, Product
+      can :manage, Sale
     else
-      can :read, Product  # Los empleados solo pueden leer artículos
+      can :read, Product
       cannot :update_stock, Product
     end
   end

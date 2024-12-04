@@ -1,8 +1,10 @@
 /* Estructura de la tabla */
 .table-admin {
-    width: 90%;
-    border-collapse: collapse;
-    margin: 0 auto;
+    width: 85%; /* Reduce el tamaño general */
+    max-width: 85%; /* Asegura que no crezca más del 80% del contenedor */
+    margin: 0 auto; /* Centra la tabla */
+    table-layout: fixed; /* Asegura que las columnas tengan un ancho fijo */
+    word-wrap: break-word; /* Permite que el texto largo se ajuste */
   }
   
   .table-admin th,
@@ -24,25 +26,39 @@
     background-color: #f9fafb; /* Fondo gris claro al pasar el ratón */
   }
   
-  /* Estilos del botón de eliminación */
-  .btn-delete-admin {
-    background-color: #f87171; /* Color rojo */
-    color: white;
+  .btn-admin-td {
     padding: 0.5rem 1rem;
     border-radius: 0.375rem;
     border: none;
     cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: bold;
+    font-family: inherit;
+    text-align: center;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-delete-admin {
+    background-color: #f87171;
+    color: white;
   }
   
   .btn-delete-admin:hover {
-    background-color: #dc2626; /* Rojo más oscuro */
+    background-color: #dc2626;
   }
   
-  .btn-delete-admin:focus {
-    outline: none;
+  .btn-details-admin {
+    text-decoration: none;
+    color: inherit;
+    background-color: #A69485;
+    color: white;
+    margin-right: 0.5rem;
   }
   
-  /* Estilos generales para el header */
+  .btn-details-admin:hover {
+    background-color: #736355;
+  }
+  
   .header-admin {
     margin-bottom: 1rem;
   }
@@ -52,16 +68,20 @@
     font-weight: 700;
     color: #333;
     margin-bottom: 0.5rem;
+    margin-left: 7.5%;
   }
   
-  /* Estilos del enlace de "Nuevo Usuario" */
-  .btn-admin {
+  .btn-admin:hover {
+    background-color: #3730a3; /* Azul más oscuro */
+  }
+  
+  .btn-primary-admin {
     display: inline-block;
     padding: 0.5rem 1rem;
-    margin-left: 5%;
+    margin-left: 7.5%;
     margin-top: 8px;
-    margin-bottom: 8px;
-    background-color: #4f46e5; /* Color azul */
+    margin-bottom: 1%;
+    background-color: #A69485;
     color: white;
     text-align: center;
     text-decoration: none;
@@ -70,16 +90,8 @@
     font-weight: 600;
   }
   
-  .btn-admin:hover {
-    background-color: #3730a3; /* Azul más oscuro */
-  }
-  
-  .btn-primary-admin {
-    background-color: #3b82f6; /* Azul primario */
-  }
-  
   .btn-primary-admin:hover {
-    background-color: #2563eb; /* Azul más oscuro */
+    background-color: #736355; /* Azul más oscuro */
   }
   
   /* Responsividad: Asegurarse que la tabla se ajuste bien a pantallas pequeñas */
@@ -104,11 +116,24 @@
       color: #333;
       font-size: 1rem;
       font-weight: 600;
+      text-align: center;
+      vertical-align: middle;
     }
   
     .table-admin td {
       padding: 0.75rem 1.25rem;
+      text-align: center;
+      vertical-align: middle;
     }
+
+    .table-admin th, 
+    .table-admin td {
+      font-size: 0.9rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
   
     .table-body-admin tr {
       display: block;

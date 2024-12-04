@@ -42,7 +42,11 @@
   <!-- Campo para el rol del usuario (puedes cambiarlo según lo que necesites) -->
   <div class="field">
     <%= f.label :role %><br />
-    <%= f.select :role, [["Empleado", 0], ["Gerente", 1], ["Administrador", 2]], prompt: "Seleccione un rol" %>
+    <%= f.select :role,options_for_select(
+        current_user.manager? ? 
+          [["Empleado", 0], ["Gerente", 1]] : # Gerente: solo roles Empleado y Gerente
+          [["Empleado", 0], ["Gerente", 1], ["Administrador", 2]] # Admin: todos los roles
+      ),  prompt: "Seleccione un rol" %>
   </div>
 
   <div class="actions">

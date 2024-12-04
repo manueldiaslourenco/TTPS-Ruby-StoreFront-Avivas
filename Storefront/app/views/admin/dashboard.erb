@@ -4,9 +4,11 @@
 
 <%= render 'shared/navbar_admin' %>
 
-<h1>Bienvenido a la administracion.</h1>
-<p>Find me in app/views/main/index.html.erb</p>
-
-<%= link_to "Listado de usuarios", admin_users_path %>
-
-<%= link_to "Productos", products_path %>
+<div class="dashboard-container">
+  <h1 class="dashboard-header">Administración de Avivas.</h1>
+  <div class="dashboard-menu">
+    <%= link_to "Usuarios", admin_users_path %>
+    <%= link_to "Productos", products_path %>
+    <%= link_to "Ventas", sales_path %>
+  </div>
+</div>

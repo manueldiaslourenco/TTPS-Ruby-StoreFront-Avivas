@@ -1,8 +1,12 @@
 Rails.application.routes.draw do
 
-  devise_for :users, controllers: {
-    registrations: 'users/registrations'
-  }
+  devise_for :users, skip: [:registrations]
+
+  as :user do
+    get 'users/edit', to: 'devise/registrations#edit', as: 'edit_user_registration'
+    put 'users', to: 'devise/registrations#update', as: 'user_registration'
+  end
+  
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -38,6 +42,13 @@ Rails.application.routes.draw do
   resources :products do
     # Ruta específica para actualizar solo el stock
     patch 'update_stock', on: :member
+  end
+
+  resources :sales do
+    # Ruta específica para actualizar solo el stock
+    post :update_products_list, on: :collection
+    post :clear_selected_products, on: :collection
+    
   end
   
 end

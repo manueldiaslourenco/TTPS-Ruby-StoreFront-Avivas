@@ -36,20 +36,35 @@
     </div>
     <% end %>
   </div>
+
+
   <div class="content-container">
     <div class="product-grid">
-      <% @products.each do |product| %>
-        <a href="<%= product_path(product) %>" class="product-card">
-          <div class="product-image">
-            <%= image_tag product.image, alt: product.name %>
-          </div>
-          <div class="product-info">
-            <h3><%= product.name %></h3>
-            <p class="product-description"><%= truncate(product.description, length: 80, omission: '...') %></p>
-            <p><%= number_to_currency(product.price) %></p>
-          </div>
-        </a>
-      <% end %>
+      <% if !@products.present? %>
+        <h2>No se encontraron productos.</h2>
+      </div>
+  </div>
+</div>
+      <% else %>
+        <% @products.each do |product| %>
+          <a href="<%= product_path(product) %>" class="product-card">
+            <div class="product-image">
+                <%= image_tag product.images.first, alt: product.name %>
+            </div>
+            <div class="product-info">
+              <h3><%= product.name %></h3>
+              <p class="product-description"><%= truncate(product.description, length: 80, omission: '...') %></p>
+              <p><%= number_to_currency(product.price) %></p>
+            </div>
+          </a>
+        <% end %>
     </div>
   </div>
 </div>
+        <div class="pagination">
+          <%= link_to_previous_page @products, "Anterior", class: "btn btn-outline-primary" %>
+          <span>Página <%= @products.current_page %> de <%= @products.total_pages %></span>
+          <%= link_to_next_page @products, "Siguiente", class: "btn btn-outline-primary" %>
+        </div>
+<% end %>
+    

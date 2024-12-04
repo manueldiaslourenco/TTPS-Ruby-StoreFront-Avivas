@@ -1,0 +1,65 @@
+.product-filter-container {
+    display: flex;
+    gap: 1rem; /* Espacio entre elementos */
+    margin-bottom: 0.3rem; /* Espaciado respecto a la tabla */
+}
+
+.btn-primary-product {
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    margin-left: 7.5%;
+    margin-top: 1.5%;
+    margin-bottom: 1.5%;
+    background-color: #A69485;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    display: inline-block; /* Asegura que se comporte como un bloque en línea */
+}
+
+.p-filter-product{
+    margin-top: 2rem;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.left-filter-product{
+    margin-left: auto; /* Mueve este subcontenedor hacia la derecha */
+    display: flex; /* Asegura que los filtros y el botón "Buscar" sigan alineados */
+    margin-right: 7.5%;
+}
+
+.product-search-input {
+    width: 100%; /* Asegura que el campo de texto ocupe el espacio disponible */
+    max-width: 300px; /* Ancho máximo para mantenerlo compacto */
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.product-category-list {
+    display: flex;
+    align-items: center; /* Alinea verticalmente el selector y el botón */
+    gap: 0.5rem;
+}
+
+.product-category-select {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.product-search-container {
+    display: flex;
+    padding: 0.5rem;
+    align-items: center;
+}
+
+.h2-not-products{
+    margin-left: 7.2%;
+}
