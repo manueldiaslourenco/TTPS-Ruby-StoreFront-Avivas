@@ -4,6 +4,8 @@
 
 <%= render 'shared/navbar_public' %>
 
+<%= render 'shared/handler_alerts' %>
+
 <div class="product-details-container">
   <div class="product-image-carousel">
     <div class="thumbnail-images">
@@ -19,7 +21,7 @@
   <div class="product-info-container">
     <h1><%= @product.name %></h1>
     <p><%= @product.description %></p>
-    <p class="price"><%= number_to_currency(@product.price) %></p>
+    <p class="price"><%= number_to_currency(@product.price, unit: "$", separator: ",", delimiter: ".", precision: 2) %></p>
     
     <div class="size-selector">
       <label>Size:</label>

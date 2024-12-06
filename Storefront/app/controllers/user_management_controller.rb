@@ -6,6 +6,10 @@ class UserManagementController < ApplicationController
   def index
     @users = User.active.where.not(id: current_user.id).page(params[:page])
   end
+
+  def show
+    @user = User.find(params[:id])
+  end
   
   def new
     @user = User.new

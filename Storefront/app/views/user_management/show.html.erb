@@ -1,0 +1,53 @@
+<% content_for :title do %>
+  Detalles Usuario
+<% end %>
+
+<%= render 'shared/navbar_admin' %>
+
+<%= render 'shared/handler_alerts' %>
+
+<div class="sale-details-container">
+  <h1 class="sale-details-title">Detalles del Perfil</h1>
+
+  <div class="sale-details-section">
+    <p><span class="sale-details-label">Mail:</span> <span class="sale-details-value"><%= @user.email %></span></p>
+    <p><span class="sale-details-label">Nombre de usuario:</span> <span class="sale-details-value"><%= @user.username %></span></p>
+    <p><span class="sale-details-label">Telefono:</span> <span class="sale-details-value"><%= @user.phone %></span></p>
+    <p><span class="sale-details-label">Rol:</span> 
+      <span class="sale-details-value">
+        <%= case @user.role
+            when 0 then "Empleado"
+            when 1 then "Gerente"
+            when 2 then "Administrador"
+            else "Desconocido"
+        end %>
+      </span>
+    </p>
+  </div>
+
+
+  <% if current_user == @user %>
+    <div class="sale-details-section">
+      <h2 class="sale-details-subtitle">Acciones</h2>
+      <div class="actions-container">
+        <%= link_to 'Editar Perfil', edit_user_registration_path, class: 'btn-admin-td btn-details-admin' %>
+      </div>
+    </div>
+  <% end %>
+
+  <% if can?(:destroy, @user) && current_user != @user %>
+    <div class="sale-details-section">
+      <h2 class="sale-details-subtitle">Acciones</h2>
+      <div class="actions-container">
+        <%= form_with(url: delete_admin_user_path(@user), method: :delete, class: "delete-form") do |f| %>
+          <%= f.submit "Desactivar", data: { confirm: '¿Estás seguro de desactivar este perfil?' }, class: "btn-admin-td btn-delete-admin" %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+</div>
+
+<div class="product-back-div">
+  <%= link_to 'Volver', request.referer || root_path, class: 'product-back-button' %>
+</div>

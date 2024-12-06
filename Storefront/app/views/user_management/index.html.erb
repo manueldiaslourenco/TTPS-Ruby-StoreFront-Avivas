@@ -4,6 +4,8 @@
 
 <%= render 'shared/navbar_admin' %>
 
+<%= render 'shared/handler_alerts' %>
+
 <div class="header-admin">
   <h1 class="h1-admin">Lista de Usuarios</h1>
 </div>
@@ -33,8 +35,8 @@
           <td>
             <% if can?(:destroy, user) %>
               <%= form_with url: delete_admin_user_path(user.id), method: :delete, local: true do |form| %>
-                <%= link_to 'Ver mas', admin_users_path, class: 'btn-admin-td btn-details-admin' %>
-                <%= form.submit "Eliminar", class: "btn-admin-td btn-delete-admin", data: { confirm: "¿Estás seguro de eliminar a este usuario?" } %>
+                <%= link_to 'Ver mas', show_admin_user_path(user), class: 'btn-admin-td btn-details-admin' %>
+                <%= form.submit "Desactivar", class: "btn-admin-td btn-delete-admin", data: { confirm: "¿Estás seguro de eliminar a este usuario?" } %>
               <% end %>
             <% else %>
               <%= link_to 'Ver mas', admin_users_path, class: 'btn-admin-td btn-details-admin' %>
@@ -52,5 +54,5 @@
   </div>
 
 <% else %>
-  <h2>No hay usuarios registrados.</h2>
+  <h2 class="h2-not-products">No hay usuarios registrados.</h2>
 <% end %>

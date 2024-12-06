@@ -4,7 +4,7 @@ class SalesController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @sales = Sale.all
+    @sales = Sale.all.page(params[:page])
   end
 
   def show
@@ -13,7 +13,6 @@ class SalesController < ApplicationController
   end
 
   def new
-    @sale = Sale.new
     @products= Product.active.available
     @client = {
       dni: params[:dni],
@@ -50,14 +49,14 @@ class SalesController < ApplicationController
           if product.stock - quantity > 0
             session[:selected_products] << { id: product.id, name: product.name, quantity: quantity, stock_available: product.stock }
           else
-            flash[:error] = "La cantidad seleccionada supera el stock disponible."
+            flash.now[:error] = "La cantidad seleccionada supera el stock disponible."
           end
         end
       else
-        flash[:error] = "Producto no encontrado"
+        flash.now[:error] = "Producto no encontrado"
       end
     else
-      flash[:error] = "El Producto o la cantidad ingresada no es válida"
+      flash.now[:error] = "El Producto o la cantidad ingresada no es válida"
     end
   
     redirect_to new_sale_path
@@ -70,11 +69,13 @@ class SalesController < ApplicationController
   
   def create
     ActiveRecord::Base.transaction do
-      @sale = Sale.new(sale_params.except(:dni, :name, :phone, :email, :sale_date))
+      client_params = params[:sale].slice(:dni, :name, :phone, :email)
+      
+      @sale = Sale.new(sale_params)
       @sale.user = current_user
 
       # Verificar o crear el cliente
-      @sale.client = find_or_create_client!(sale_params)
+      @sale.client = find_or_create_client!(client_params)
       sale_date_clock = sale_params[:sale_date]
       sale_date_object = DateTime.parse(sale_date_clock)
       @sale.sale_date = sale_date_object
@@ -89,8 +90,7 @@ class SalesController < ApplicationController
         flash[:success] = "Venta creada exitosamente."
         redirect_to sale_path(@sale)
       else
-        flash[:error] = "No se seleccionaron productos para la venta."
-        @sale = Sale.new
+        flash.now[:error] = "No se seleccionaron productos para la venta."
         @products= Product.active.available
         @client = {
           dni: params[:dni],
@@ -176,6 +176,6 @@ class SalesController < ApplicationController
   end
 
   def sale_params
-    params.require(:sale).permit(:client_id, :sale_date, :dni, :name, :phone, :email, :quantity)
+    params.require(:sale).permit(:client_id, :sale_date, :quantity)
   end
 end

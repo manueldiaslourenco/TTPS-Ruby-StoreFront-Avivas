@@ -1,24 +1,45 @@
+<% content_for :title do %>
+  Detalles Venta
+<% end %>
+
 <%= render 'shared/navbar_admin' %>
 
-<h1>Detalles de la Venta</h1>
+<%= render 'shared/handler_alerts' %>
 
-<p><strong>Venta ID:</strong> <%= @sale.id %></p>
-<p><strong>Fecha de Venta:</strong> <%= @sale.sale_date %></p>
-<p><strong>Total:</strong> <%= @sale.total_amount %> </p>
+<div class="sale-details-container">
+  <h1 class="sale-details-title">Detalles de la Venta</h1>
 
-<h3>Cliente</h3>
-<p><strong>DNI:</strong> <%= @sale.client.dni %></p>
-<p><strong>Nombre:</strong> <%= @sale.client.name %></p>
-<p><strong>Teléfono:</strong> <%= @sale.client.phone %></p>
-<p><strong>Email:</strong> <%= @sale.client.email %></p>
+  <div class="sale-details-section">
+    <p><span class="sale-details-label">Venta:</span> <span class="sale-details-value"><%= @sale.id %></span></p>
+    <% if @sale.deleted_at.nil? %>
+      <p><span class="sale-details-label">Estado:</span> <span class="sale-details-value">Realizada</span></p>
+    <% else %> 
+      <p><span class="sale-details-label">Estado:</span> <span class="sale-details-value">Cancelada</span></p>
+    <% end %> 
+    <p><span class="sale-details-label">Fecha de Venta:</span> <span class="sale-details-value"><%= @sale.sale_date.strftime("%d %m %Y %H:%M") %></span></p>
+    <p><span class="sale-details-label">Total:</span> <span class="sale-details-value"><%= number_to_currency(@sale.total_amount, unit: "$", separator: ",", delimiter: ".", precision: 2) %></span></p>
+  </div>
 
-<h3>Productos Vendidos</h3>
-<ul>
-  <% @sale.sale_items.each do |item| %>
-    <li>
-      <%= item.product.name %> (Cantidad: <%= item.quantity %>, Precio Unitario: <%= item.unit_price %>)
-    </li>
-  <% end %>
-</ul>
+  <div class="sale-client-section">
+    <h3 class="sales-form-title">Cliente</h3>
+    <p><span class="sale-details-label">DNI:</span> <span class="sale-details-value"><%= @sale.client.dni %></span></p>
+    <p><span class="sale-details-label">Nombre:</span> <span class="sale-details-value"><%= @sale.client.name %></span></p>
+    <p><span class="sale-details-label">Teléfono:</span> <span class="sale-details-value"><%= @sale.client.phone %></span></p>
+    <p><span class="sale-details-label">Email:</span> <span class="sale-details-value"><%= @sale.client.email %></span></p>
+  </div>
 
-<%= link_to 'Volver', root_path %>
+  <div class="sale-products-section">
+    <h3 class="sales-form-title">Productos Vendidos</h3>
+    <ul class="sale-products-list">
+      <% @sale.sale_items.each do |item| %>
+        <li>
+          <%= item.product.name %> (Cantidad: <%= item.quantity %>, Precio Unitario: <%= number_to_currency(item.unit_price, unit: "$", separator: ",", delimiter: ".", precision: 2) %>)
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+<div class="product-back-div">
+  <%= link_to 'Volver', request.referer || root_path, class: 'product-back-button' %>
+</div>

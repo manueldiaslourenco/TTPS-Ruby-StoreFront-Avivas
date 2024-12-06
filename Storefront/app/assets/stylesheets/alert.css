@@ -1,0 +1,19 @@
+.alert-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+  }
+  
+  .alert-success {
+    background-color: #e6f4ea;
+    color: #2e7d32;
+  }
+  
+  .alert-error {
+    background-color: #ffebee;
+    color: #c62828;
+  }
+  
+  .alert-content {
+    flex-grow: 1;
+  }

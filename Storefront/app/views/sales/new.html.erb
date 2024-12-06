@@ -1,27 +1,43 @@
+<% content_for :title do %>
+  Nueva Venta
+<% end %>
+
 <%= render 'shared/navbar_admin' %>
 
-<h1>Nueva Venta</h1>
+<%= render 'shared/handler_alerts' %>
 
-  <!-- Formulario para agregar productos -->
-  <div>
+
+<div class="sales-form-container">
+  <h1 class="sales-form-title">Nueva Venta</h1>
+
+  <!-- Sección para agregar productos -->
+  <div class="sales-product-section">
     <%= form_with url: update_products_list_sales_path, method: :post, local: true do |product_form| %>
-        <%= product_form.label :product_id, "Seleccionar Producto" %>
-        <%= select_tag :product_id, options_from_collection_for_select(@products, :id, :name, prompt: "Selecciona un producto") %>
+      <div class="sales-form-group">
+        <%= product_form.label :product_id, "Seleccionar Producto", class: "sales-form-label" %>
+        <%= select_tag :product_id, options_from_collection_for_select(@products, :id, :name, prompt: "Selecciona un producto"), class: "sales-form-input" %>
+      </div>
 
-        <%= product_form.label :quantity, "Cantidad" %>
-        <%= product_form.number_field :quantity, min: 1, value: 1, required: true %>
-
+      <div class="sales-form-group">
+        <%= product_form.label :quantity, "Cantidad", class: "sales-form-label" %>
+        <%= product_form.number_field :quantity, min: 1, value: 1, required: true, class: "sales-form-input" %>
+        <div class="product-edit-form-helper">
+          Ingrese una cantidad mayor a 0 del producto seleccionado.
+        </div>
+      </div>
         
-        <%= product_form.submit "Agregar Producto" %>
+      <%= product_form.submit "Agregar Producto", class: "sales-form-submit" %>
     <% end %>
+
     <%= form_with url: clear_selected_products_sales_path, method: :post, local: true do |f| %>
-        <%= f.submit "Limpiar Productos Seleccionados", class: "btn btn-danger" %>
+      <%= f.submit "Limpiar Productos", class: "sales-form-clear-button" %>
     <% end %>
   </div>
 
-  <div>
-    <h4>Productos Seleccionados</h4>
-    <table>
+  <!-- Lista de productos seleccionados -->
+  <div class="sales-product-section">
+    <h4 class="sales-form-title">Productos Seleccionados</h4>
+    <table class="sales-product-table">
       <thead>
         <tr>
           <th>Producto</th>
@@ -41,33 +57,35 @@
     </table>
   </div>
 
-
-<%= form_with model: @sale, local: true do |f| %>
-  <h3>Datos del Cliente</h3>
-  <div>
-    <div>
-      <%= f.label :dni, "DNI" %>
-      <%= f.text_field :dni, value: params[:dni] || @client[:dni], required: true %>
-    </div>
-    <div>
-      <%= f.label :name, "Nombre" %>
-      <%= f.text_field :name, value: params[:name] || @client[:name], required: true %>
-    </div>
-    <div>
-      <%= f.label :phone, "Teléfono" %>
-      <%= f.text_field :phone, value: params[:phone] || @client[:phone], required: true %>
-    </div>
-    <div>
-      <%= f.label :email, "Correo" %>
-      <%= f.email_field :email, value: params[:email] || @client[:email], required: true %>
+  <!-- Formulario de datos del cliente -->
+  <%= form_with model: @sale, local:true do |f| %>
+    <h3 class="sales-form-title">Datos del Cliente</h3>
+    <div class="sales-form-group">
+      <%= f.label :dni, "DNI", class: "sales-form-label" %>
+      <%= f.text_field :dni, value: params[:dni] || @client[:dni], required: true, class: "sales-form-input" %>
     </div>
 
-    <h3>Fecha de la venta</h3>
-    <div>
-        <%= f.label :sale_date, "Fecha y Hora" %>
-        <%= f.datetime_local_field :sale_date, value: params[:sale_date] || @sale.sale_date, required: true %>
+    <div class="sales-form-group">
+      <%= f.label :name, "Nombre", class: "sales-form-label" %>
+      <%= f.text_field :name, value: params[:name] || @client[:name], required: true, class: "sales-form-input" %>
     </div>
-  </div>
 
-  <%= f.submit "Crear Venta" %>
-<% end %>
+    <div class="sales-form-group">
+      <%= f.label :phone, "Teléfono", class: "sales-form-label" %>
+      <%= f.text_field :phone, value: params[:phone] || @client[:phone], required: true, class: "sales-form-input" %>
+    </div>
+
+    <div class="sales-form-group">
+      <%= f.label :email, "Correo", class: "sales-form-label" %>
+      <%= f.email_field :email, value: params[:email] || @client[:email], required: true, class: "sales-form-input" %>
+    </div>
+
+    <h3 class="sales-form-title">Fecha de la venta</h3>
+    <div class="sales-form-group">
+      <%= f.label :sale_date, "Fecha y Hora", class: "sales-form-label" %>
+      <%= f.datetime_local_field :sale_date, required: true, class: "sales-form-input" %>
+    </div>
+
+    <%= f.submit "Registrar", class: "sales-form-submit" %>
+  <% end %>
+</div>

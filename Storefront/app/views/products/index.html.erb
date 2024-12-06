@@ -1,4 +1,10 @@
+<% content_for :title do %>
+  Listado Productos
+<% end %>
+
 <%= render 'shared/navbar_admin' %>
+
+<%= render 'shared/handler_alerts' %>
 
 <div class="header-admin">
   <h1 class="h1-admin">Lista de Productos</h1>
@@ -6,7 +12,9 @@
 
 <%= form_tag products_path, method: :get do %>
     <div class="product-filter-container">
+      <div class="product-btn-primary-container">
       <%= link_to 'Nuevo Producto', new_product_path, class: "btn-primary-product"%>
+      </div>
       <div class="left-filter-product">
         <p class="p-filter-product">Filtros:</p>
         <div class= "product-search-container">
@@ -47,7 +55,7 @@
     <% @products.each do |product| %>
       <tr>
         <td><%= product.name %></td>
-        <td><%= number_to_currency(product.price) %></td>
+        <td><%= number_to_currency(product.price, unit: "$", separator: ",", delimiter: ".", precision: 2) %></td>
         <td><%= product.stock %></td>
         <td><%= product.category.name %></td>
         <td>

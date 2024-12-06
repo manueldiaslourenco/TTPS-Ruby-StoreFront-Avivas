@@ -24,7 +24,7 @@ class ProductsController < ApplicationController
     if @product.save
       redirect_to @product, notice: 'El producto fue creado exitosamente.'
     else
-      flash.now[:error] = 'Hubo un problema al crear el producto.'
+      flash_messages_from_model(@product)
       render :new, status: :unprocessable_entity
     end
   end
@@ -62,7 +62,7 @@ class ProductsController < ApplicationController
   
     # Si algo falla, renderizar la edición con errores
     if @product.errors.any?
-      flash[:error] = 'Hubo un problema al actualizar el producto.'
+      flash_messages_from_model(@product)
       render :edit, status: :unprocessable_entity
     end
   end

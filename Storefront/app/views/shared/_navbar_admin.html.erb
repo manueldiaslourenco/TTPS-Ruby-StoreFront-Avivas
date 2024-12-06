@@ -26,8 +26,8 @@
 
         <!-- Menú desplegable -->
         <div class="dropdown-menu">
-            <%= link_to edit_user_registration_path, class: "dropdown-item" do %>
-            Editar Perfil
+            <%= form_with url: show_admin_user_path(current_user), method: :get, class: "dropdown-item" do |form| %>
+              <%= form.submit "Ver Perfil", class: "nav-link" %>
             <% end %>
             <%= form_with url: destroy_user_session_path, method: :delete, class: "dropdown-item", local: true do |form| %>
               <%= form.submit "Cerrar Sesión", class: "nav-link" %>

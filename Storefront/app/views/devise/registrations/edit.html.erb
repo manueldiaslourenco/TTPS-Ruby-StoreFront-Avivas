@@ -1,4 +1,10 @@
+<% content_for :title do %>
+  Editar Usuario
+<% end %>
+
 <%= render 'shared/navbar_admin' %>
+
+<%= render 'shared/handler_alerts' %>
 
 <div class="product-edit-form-container">
   <h1 class="product-edit-form-title">Editar Usuario</h1>
@@ -26,7 +32,7 @@
 
     <div class="product-edit-form-group">
       <%= form.label :phone, "Telefono", class: "product-edit-form-label" %>
-      <%= form.text_field :phone, required: true, value: resource.phone, class: "product-edit-form-input" %>
+      <%= form.telephone_field :phone, required: true, value: resource.phone, class: "product-edit-form-input" %>
     </div>
 
     <div class="product-edit-form-group">

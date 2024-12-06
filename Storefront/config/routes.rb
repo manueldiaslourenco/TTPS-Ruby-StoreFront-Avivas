@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   get 'admin', to: 'admin#dashboard', as: 'admin'
 
   get 'admin/users', to: 'user_management#index', as: 'admin_users'        # Listar todos los usuarios
+  get 'admin/users/show/:id', to: 'user_management#show', as: 'show_admin_user'
   get 'admin/users/new', to: 'user_management#new', as: 'new_admin_user'    # Formulario para crear un nuevo usuario
   post 'admin/users', to: 'user_management#create', as: 'create_admin_user' # Crear un nuevo usuario
   delete 'admin/users/delete/:id', to: 'user_management#destroy', as: 'delete_admin_user'
