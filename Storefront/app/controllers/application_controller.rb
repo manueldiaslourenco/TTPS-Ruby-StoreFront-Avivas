@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
     # Iterate through each error message and set individual flash messages
     model.errors.full_messages.each do |msg|
       clean_msg = msg.split(' ', 2).last
-     flash.now[:error] = clean_msg
+      flash.now[:error] = clean_msg
     end
   end
   

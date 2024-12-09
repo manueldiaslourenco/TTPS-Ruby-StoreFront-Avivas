@@ -41,8 +41,13 @@ class ProductsController < ApplicationController
         new_images = params[:product][:images].present? && params[:product][:images].reject(&:blank?).any?
         
         if remaining_images.zero? && !new_images
-          flash.now[:error] = "No puedes eliminar todas las imágenes sin agregar al menos una nueva."
+          begin
           raise ActiveRecord::Rollback
+          rescue ActiveRecord::Rollback => e
+            flash.now[:error] = "No puedes eliminar todas las imágenes sin agregar al menos una nueva."
+            render :edit, status: :unprocessable_entity # Si hay errores de validación, renderizas
+            return # Añades return para evitar que se ejecute el siguiente código
+          end
         else
           # Proceder a eliminar las imágenes marcadas
           params[:product][:remove_images].each do |image_id|
@@ -50,21 +55,26 @@ class ProductsController < ApplicationController
           end
         end
       end
-  
+
+      if params[:product][:images].present?
+        new_images = params[:product][:images].reject(&:blank?)
+        @product.images.attach(new_images)
+      end
       # Intentar actualizar el producto con nuevos datos
-      if @product.update(product_params.except(:remove_images))
+      if @product.update(product_params.except(:remove_images, :images))
         flash[:success] = "El producto se actualizó correctamente."
         redirect_to @product, success: 'El producto se actualizó correctamente.'
       else
         raise ActiveRecord::Rollback
       end
-    end
   
-    # Si algo falla, renderizar la edición con errores
+    end
+
     if @product.errors.any?
       flash_messages_from_model(@product)
       render :edit, status: :unprocessable_entity
     end
+
   end
   
 

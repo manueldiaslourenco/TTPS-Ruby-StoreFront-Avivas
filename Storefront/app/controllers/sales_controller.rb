@@ -14,6 +14,12 @@ class SalesController < ApplicationController
 
   def new
     @products= Product.active.available
+
+    if @products.empty?
+      flash[:error] = "Se deben cargar productos con stock disponible."
+      return redirect_to sales_path
+    end
+
     @client = {
       dni: params[:dni],
       name: params[:name],
@@ -42,7 +48,7 @@ class SalesController < ApplicationController
           if product.stock - (existing_product['quantity'] + quantity) > 0
             existing_product['quantity'] += quantity
           else
-            flash[:error] = "La cantidad seleccionada supera el stock disponible."
+            flash.now[:error] = "La cantidad seleccionada supera el stock disponible."
           end
         else
           # Si el producto no está en la lista, agregarlo
@@ -74,14 +80,11 @@ class SalesController < ApplicationController
       @sale = Sale.new(sale_params)
       @sale.user = current_user
 
-      # Verificar o crear el cliente
       @sale.client = find_or_create_client!(client_params)
       sale_date_clock = sale_params[:sale_date]
       sale_date_object = DateTime.parse(sale_date_clock)
       @sale.sale_date = sale_date_object
       
-      
-      # Validar y procesar productos seleccionados
       if session[:selected_products].present?
         process_products!(session[:selected_products])
         calculate_total_amount!
@@ -90,18 +93,29 @@ class SalesController < ApplicationController
         flash[:success] = "Venta creada exitosamente."
         redirect_to sale_path(@sale)
       else
-        flash.now[:error] = "No se seleccionaron productos para la venta."
-        @products= Product.active.available
-        @client = {
-          dni: params[:dni],
-          name: params[:name],
-          phone: params[:phone],
-          email: params[:email]
-        }
-        @selected_products = session[:selected_products] || []
-        render :new and raise ActiveRecord::Rollback
+        begin
+          raise ActiveRecord::Rollback
+        rescue ActiveRecord::Rollback => e
+            flash.now[:error] = "No se seleccionaron productos para la venta."
+            @products= Product.active.available
+            @client = {
+              dni: params[:dni],
+              name: params[:name],
+              phone: params[:phone],
+              email: params[:email]
+            }
+            @selected_products = session[:selected_products] || []
+            render :new, status: :unprocessable_entity
+            return
+        end
       end
     end
+
+    if @sale.errors.any?
+      flash_messages_from_model(@sale)
+      render :new, status: :unprocessable_entity
+    end
+
   end
 
   def destroy

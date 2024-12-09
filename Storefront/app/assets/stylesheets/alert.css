@@ -1,19 +1,35 @@
-.alert-icon {
-    width: 20px;
-    height: 20px;
-    margin-right: 12px;
-  }
-  
-  .alert-success {
-    background-color: #e6f4ea;
-    color: #2e7d32;
-  }
-  
-  .alert-error {
-    background-color: #ffebee;
-    color: #c62828;
-  }
-  
-  .alert-content {
-    flex-grow: 1;
-  }
+.alerts-container {
+  position: absolute;
+  align-items: center;
+  top: 12%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  width: 400px;
+  max-width: 90%;
+}
+
+.alert {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  padding: 12px 16px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.alert-success {
+  background-color: #e6f4ea;
+  color: #2e7d32;
+}
+
+.alert-error {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.alert-content {
+  text-align: center;
+  flex-grow: 1;
+}

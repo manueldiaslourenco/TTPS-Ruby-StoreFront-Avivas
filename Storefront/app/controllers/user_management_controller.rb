@@ -21,6 +21,9 @@ class UserManagementController < ApplicationController
     if @user.save
       redirect_to admin_users_path, notice: 'Usuario creado exitosamente.'
     else
+      if @user.errors.any?
+        flash_messages_from_model(@user)
+      end
       render :new
     end
   end

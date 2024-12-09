@@ -3,11 +3,11 @@ class Product < ApplicationRecord
   has_many_attached :images
 
   # Validaciones
-  validates :name, presence: true, length: { maximum: 255 }
-  validates :description, presence: true, length: { maximum: 500, message: "La descripcion es demasiado larga (Max 500 caracteres)." }
-  validates :price, presence: true, numericality: { greater_than_or_equal_to: 0 }
-  validates :stock, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-  validates :category, presence: true
+  validates :name, presence: { message: "Se debe ingresar un nombre." }, length: { maximum: 255, message: "El titulo es demasiado largo (Maximo 255 caracteres)."  }
+  validates :description, presence: { message: "Se debe ingresar una descripcion." }, length: { maximum: 500, message: "La descripcion es demasiado larga (Maximo 500 caracteres)." }
+  validates :price, presence: { message: "Se debe ingresar un precio." }, numericality: { greater_than_or_equal_to: 0, message: "El precio ingresado debe ser mayor a 0." }
+  validates :stock, presence: { message: "Se debe ingresar un stock." }, numericality: { only_integer: true, greater_than_or_equal_to: 0, message: "El stock ingresado debe ser mayor a 0." }
+  validates :category, presence: { message: "Se debe seleccionar una categoria." }
   validate :not_deleted, on: :update
   validate :images_content_type
   validate :image_count

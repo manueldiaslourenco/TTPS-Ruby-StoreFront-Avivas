@@ -20,9 +20,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # PUT /resource
-  # def update
-  #   super
-  # end
+  def update
+     Rails.logger.info "Account update params: #{account_update_params.inspect}"
+     super
+  end
 
   # DELETE /resource
   # def destroy

@@ -47,7 +47,7 @@
 
     <div class="product-edit-form-group">
       <%= form.label :images, "Selecciona nuevas imágenes", class: "product-edit-form-label" %>
-      <%= form.file_field :images, multiple: true, accept: 'image/png, image/jpeg, image/jpg', class: "product-edit-form-input" %>
+      <%= form.file_field :images, multiple: true, class: "product-edit-form-input" %>
       <div class="product-edit-form-helper">
         Las cantidad permitida de ingresar nuevas imagenes es 3. Si la cantidad ingresada mas la cargada superan este limite (3) las nuevas imagenes sobreescribiran las cargadas previamente.
       </div>
@@ -59,23 +59,25 @@
       </div>
       <div class="product-image-list">
         <% @product.images.each do |image| %>
-          <div class="product-image-item">
-            <%= image_tag image, alt: @product.name, class: "product-image-preview" %>
-            <div>
-              <p class="product-image-filename">
-              <%= 
-                file_name = image.filename.to_s
-                if file_name.length > 10
-                  file_name[0, 5] + "..." + file_name[-7..-1]
-                else
-                  file_name
-                end
-              %>
-              </p>
-              <%= check_box_tag "product[remove_images][]", image.id, class: "form-checkbox" %>
-              Eliminar
+          <% if image.persisted? %>
+            <div class="product-image-item">
+              <%= image_tag image, alt: @product.name, class: "product-image-preview" %>
+              <div>
+                <p class="product-image-filename">
+                <%= 
+                  file_name = image.filename.to_s
+                  if file_name.length > 10
+                    file_name[0, 5] + "..." + file_name[-7..-1]
+                  else
+                    file_name
+                  end
+                %>
+                </p>
+                <%= check_box_tag "product[remove_images][]", image.id, class: "form-checkbox" %>
+                Eliminar
+              </div>
             </div>
-          </div>
+          <% end %>
         <% end %>
       </div>
     <% end %>

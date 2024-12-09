@@ -8,7 +8,7 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-    ["Camisetas", "Remeras", "Pantalones", "Interior", "Calzado", "Abrigo"].each do |category_name|
+    ["Accesorios","Camisetas Deportivas", "Remeras", "Pantalones", "Shorts", "Interior", "Zapatillas", "Botines", "Abrigo", "Conjuntos"].each do |category_name|
       Category.find_or_create_by!(name: category_name)
     end
 
@@ -16,7 +16,7 @@
     # Crear productos
     
     User.create!(
-        email: 'admin@example.com',
+        email: 'manueldiasuala@gmail.com',
         username: 'admin_user',
         phone: '1234567890',
         role: 2,

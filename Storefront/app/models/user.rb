@@ -4,11 +4,11 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  validates :email, presence: true, uniqueness: { message: "Este mail ya está en uso." }
-  validates :role, presence: true, inclusion: { in: [0, 1, 2] }
-  validates :username, presence: true, uniqueness: { message: "Este nombre de usuario ya está en uso." }
+  validates :email, presence: { message: "Se debe ingresar un mail." }, uniqueness: { message: "Este mail ya está en uso." }
+  validates :role, presence: { message: "Se debe seleccionar un rol." }, inclusion: { in: [0, 1, 2] }
+  validates :username, presence: { message: "Se debe ingresar un nombre de usuario." }, uniqueness: { message: "Este nombre de usuario ya está en uso." }
   validates :password, confirmation: true, password_strength: { message: "La contraseña es demasiado debil.", min_entropy: 16, min_word_length: 6, use_dictionary: true}, if: :password_required?
-  validates :phone, presence: true, format: { with: /\A\d{10}\z/, message: "El telefono debe tener 10 dígitos" }
+  validates :phone, presence: { message: "Se debe ingresar un nombre de usuario." }, format: { with: /\A\d{10}\z/, message: "El telefono debe tener 10 dígitos" }
 
 
   def password_required?
