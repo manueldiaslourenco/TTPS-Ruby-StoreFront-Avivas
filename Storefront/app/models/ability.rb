@@ -37,10 +37,15 @@ class Ability
     elsif user.manager?
       can :manage, Product
       can :manage, User, role: [0, 1]
+      can :read, User, role: 2
       cannot :create, User, role: 2
       cannot :destroy, User, role: 2
       can :manage, Sale
     elsif user.employee?
+      # Usamos un bloque para comprobar si el usuario puede leer su propio perfil
+      can :read, User do |u|
+        u.id == user.id
+      end
       can :manage, Product
       can :update_stock, Product
       can :manage, Sale

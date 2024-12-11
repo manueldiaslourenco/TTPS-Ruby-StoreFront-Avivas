@@ -7,8 +7,10 @@
 <div class="dashboard-container">
   <h1 class="dashboard-header">Administración de Avivas.</h1>
   <div class="dashboard-menu">
-    <%= link_to "Usuarios", admin_users_path %>
     <%= link_to "Productos", products_path %>
     <%= link_to "Ventas", sales_path %>
+    <% if can?(:read, @user)%>
+      <%= link_to "Usuarios", admin_users_path %>
+    <% end %>  
   </div>
 </div>

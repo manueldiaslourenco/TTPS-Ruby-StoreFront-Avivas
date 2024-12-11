@@ -1,13 +1,15 @@
 .product-filter-container {
     display: flex;
-    gap: 1rem; /* Espacio entre elementos */
-    margin-bottom: 0.3rem; /* Espaciado respecto a la tabla */
+    gap: 1rem;
+    margin-bottom: 0.3rem; 
+    font-family: 'Roboto', 'Poppins', sans-serif;
 }
 
-.product-btn-primary-container{
+.product-btn-primary-container {
     display: flex;
     margin-bottom: 8px;
     margin-left: 7.5%;
+    font-family: 'Roboto', 'Poppins', sans-serif;
 }
 
 .btn-primary-product {
@@ -23,34 +25,39 @@
     font-weight: 600;
     display: inline-block;
     width: max-content;
+    font-family: 'Roboto', 'Poppins', sans-serif;
 }
 
-.p-filter-product{
+.p-filter-product {
     margin-top: 2rem;
     align-items: center;
     font-size: 1.5rem;
     font-weight: 600;
+    font-family: 'Roboto', 'Poppins', sans-serif;
 }
 
-.left-filter-product{
-    margin-left: auto; /* Mueve este subcontenedor hacia la derecha */
-    display: flex; /* Asegura que los filtros y el botón "Buscar" sigan alineados */
+.left-filter-product {
+    margin-left: auto;
+    display: flex;
     margin-right: 7.5%;
+    font-family: 'Roboto', 'Poppins', sans-serif;
 }
 
 .product-search-input {
-    width: 100%; /* Asegura que el campo de texto ocupe el espacio disponible */
-    max-width: 300px; /* Ancho máximo para mantenerlo compacto */
+    width: 100%;
+    max-width: 300px;
     padding: 0.5rem;
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 1rem;
+    font-family: 'Roboto', 'Poppins', sans-serif;
 }
 
 .product-category-list {
     display: flex;
-    align-items: center; /* Alinea verticalmente el selector y el botón */
+    align-items: center;
     gap: 0.5rem;
+    font-family: 'Roboto', 'Poppins', sans-serif;
 }
 
 .product-category-select {
@@ -58,14 +65,17 @@
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 1rem;
+    font-family: 'Roboto', 'Poppins', sans-serif;
 }
 
 .product-search-container {
     display: flex;
     padding: 0.5rem;
     align-items: center;
+    font-family: 'Roboto', 'Poppins', sans-serif;
 }
 
-.h2-not-products{
+.h2-not-products {
     margin-left: 7.2%;
+    font-family: 'Roboto', 'Poppins', sans-serif;
 }

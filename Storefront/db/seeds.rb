@@ -13,8 +13,6 @@
     end
 
 
-    # Crear productos
-    
     User.create!(
         email: 'manueldiasuala@gmail.com',
         username: 'admin_user',
@@ -23,3 +21,7 @@
         password: '45913067roco.now',             # Devise se encargará de encriptarla
         password_confirmation: '45913067roco.now' # Devise verifica que coincidan
     )
+
+
+    require_relative 'seeds/products/helpers'
+    require_relative 'seeds/products/create_products'

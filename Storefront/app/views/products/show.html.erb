@@ -24,7 +24,7 @@
     <p class="price"><%= number_to_currency(@product.price, unit: "$", separator: ",", delimiter: ".", precision: 2) %></p>
     
     <div class="size-selector">
-      <label>Size:</label>
+      <label>Talle:</label>
       <% if @product.size.present? %>
         <button class="active"><%= @product.size %></button>
       <% else %>
@@ -46,7 +46,7 @@
         <%= form_with(model: @product, url: update_stock_product_path(@product), method: :patch, local: true) do |form| %>
           <label>Stock:</label>
           <%= form.number_field :stock, value: @product.stock %>
-          <%= form.submit "Update Stock" %>
+          <%= form.submit "Actualizar", class: 'product-info-edit-stock-btn' %>
         <% end %>
       <% else %>
         <p><label>Stock:</label><%= @product.stock %></p>

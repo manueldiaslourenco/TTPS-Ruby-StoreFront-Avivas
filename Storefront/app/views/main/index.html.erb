@@ -56,7 +56,7 @@
             <div class="product-info">
               <h3><%= product.name %></h3>
               <p class="product-description"><%= truncate(product.description, length: 80, omission: '...') %></p>
-              <p><%= number_to_currency(product.price) %></p>
+              <p><%= number_to_currency(product.price, unit: "$", separator: ",", delimiter: ".", precision: 2) %></p>
             </div>
           </a>
         <% end %>

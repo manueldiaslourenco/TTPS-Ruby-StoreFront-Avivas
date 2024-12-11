@@ -5,10 +5,12 @@ class UserManagementController < ApplicationController
 
   def index
     @users = User.active.where.not(id: current_user.id).page(params[:page])
+    authorize! :read, @user
   end
 
   def show
     @user = User.find(params[:id])
+    authorize! :read, @user
   end
   
   def new
@@ -24,7 +26,7 @@ class UserManagementController < ApplicationController
       if @user.errors.any?
         flash_messages_from_model(@user)
       end
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 

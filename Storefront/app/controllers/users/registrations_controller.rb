@@ -15,14 +15,29 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # GET /resource/edit
-  # def edit
-  #   super
-  # end
+  def edit
+     super
+  end
 
   # PUT /resource
   def update
-     Rails.logger.info "Account update params: #{account_update_params.inspect}"
-     super
+    if @user.valid_password?(account_update_params[:current_password])
+      if @user.update(account_update_params.except(:current_password))
+        flash[:notice] = "Usuario actualizado correctamente."
+        if account_update_params[:password].present?
+          flash[:notice] = "Se debe volver a iniciar sesión luego de cambiar la contraseña."
+        end
+        redirect_to after_update_path_for(@user)
+      else
+        if @user.errors.any?
+          flash_messages_from_model(@user)
+        end
+        render :edit, status: :unprocessable_entity
+      end
+    else
+      flash.now[:error] = "La contraseña actual es incorrecta."
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   # DELETE /resource
@@ -48,9 +63,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_account_update_params
-    devise_parameter_sanitizer.permit(:account_update, keys: [:username, :phone])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:username, :phone, :current_password, :password, :password_confirmation])
   end
-
   # The path used after sign up.
   # def after_sign_up_path_for(resource)
   #   super(resource)

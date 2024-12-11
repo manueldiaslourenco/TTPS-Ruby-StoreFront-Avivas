@@ -6,6 +6,7 @@
     border: 1px solid #D2B09C; 
     border-radius: 0.5rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: 'Roboto', 'Poppins', sans-serif;
 }
 
 .sale-details-title {
@@ -14,10 +15,12 @@
     margin-bottom: 1.5rem;
     color: #6B4F3B; 
     text-align: center;
+    font-family: 'Roboto', 'Poppins', sans-serif;
 }
 
 .sale-details-section {
     margin-bottom: 1.5rem;
+    font-family: 'Roboto', 'Poppins', sans-serif;
 }
 
 .sale-details-label {
@@ -25,23 +28,27 @@
     color: #6B4F3B;
     display: inline-block;
     margin-bottom: 0.5rem;
+    font-family: 'Roboto', 'Poppins', sans-serif;
 }
 
 .sale-details-value {
     font-weight: 400;
     color: #4A4A4A;
     margin-left: 0.5rem;
+    font-family: 'Roboto', 'Poppins', sans-serif;
 }
 
 .sale-client-section,
 .sale-products-section {
     margin-top: 1.5rem;
+    font-family: 'Roboto', 'Poppins', sans-serif;
 }
 
 .sale-products-list {
     list-style-type: disc;
     margin-left: 1.5rem;
     color: #6B4F3B;
+    font-family: 'Roboto', 'Poppins', sans-serif;
 }
 
 .sale-products-list li {
@@ -59,6 +66,7 @@
     font-weight: bold;
     text-align: center;
     transition: background-color 0.3s ease;
+    font-family: 'Roboto', 'Poppins', sans-serif;
 }
 
 .sale-back-link:hover {

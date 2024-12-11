@@ -51,5 +51,9 @@ Rails.application.routes.draw do
     post :clear_selected_products, on: :collection
     
   end
+
+  match '*path', to: 'application#render_404', via: :all, constraints: ->(req) { 
+  !req.path.start_with?('/rails/active_storage') 
+  }
   
 end

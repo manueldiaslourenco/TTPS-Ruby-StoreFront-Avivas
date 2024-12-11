@@ -39,7 +39,7 @@
                 <%= form.submit "Desactivar", class: "btn-admin-td btn-delete-admin", data: { confirm: "¿Estás seguro de eliminar a este usuario?" } %>
               <% end %>
             <% else %>
-              <%= link_to 'Ver mas', admin_users_path, class: 'btn-admin-td btn-details-admin' %>
+              <%= link_to 'Ver mas', show_admin_user_path(user), class: 'btn-admin-td btn-details-admin' %>
             <% end %>
           </td>
         </tr>

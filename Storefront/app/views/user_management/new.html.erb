@@ -10,7 +10,6 @@
   <h1 class="product-edit-form-title">Crear Usuario</h1>
 
   <%= form_for(@user, url: admin_users_path) do |form| %>
-    <%= render "devise/shared/error_messages", resource: @user %>
 
       <div class="product-edit-form-group">
         <%= form.label :email, "Mail", class: "product-edit-form-label" %>
