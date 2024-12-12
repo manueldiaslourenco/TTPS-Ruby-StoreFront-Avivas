@@ -81,10 +81,11 @@ class ProductsController < ApplicationController
   def update_stock
     
     if @product.update(stock_params)
+      flash[:success] = "Stock actualizado."
       redirect_to @product, success: 'Stock actualizado exitosamente.'
     else
-      flash[:error] = "No se pudo actualizar el stock."
-      render :show
+      flash.now[:error] = "No se pudo actualizar el stock."
+      render :show, status: :unprocessable_entity
     end
   end
 

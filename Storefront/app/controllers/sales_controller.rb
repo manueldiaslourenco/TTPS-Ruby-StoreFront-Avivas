@@ -13,6 +13,7 @@ class SalesController < ApplicationController
   end
 
   def new
+
     @products= Product.active.available
 
     if @products.empty?
@@ -26,6 +27,7 @@ class SalesController < ApplicationController
       phone: params[:phone],
       email: params[:email]
     }
+    
     @selected_products = session[:selected_products] || []
   end
   
@@ -48,21 +50,21 @@ class SalesController < ApplicationController
           if product.stock - (existing_product['quantity'] + quantity) > 0
             existing_product['quantity'] += quantity
           else
-            flash.now[:error] = "La cantidad seleccionada supera el stock disponible."
+            flash[:error] = "La cantidad seleccionada supera el stock disponible."
           end
         else
           # Si el producto no está en la lista, agregarlo
           if product.stock - quantity > 0
             session[:selected_products] << { id: product.id, name: product.name, quantity: quantity, stock_available: product.stock }
           else
-            flash.now[:error] = "La cantidad seleccionada supera el stock disponible."
+            flash[:error] = "La cantidad seleccionada supera el stock disponible."
           end
         end
       else
-        flash.now[:error] = "Producto no encontrado"
+        flash[:error] = "Producto no encontrado"
       end
     else
-      flash.now[:error] = "El Producto o la cantidad ingresada no es válida"
+      flash[:error] = "El Producto o la cantidad ingresada no es válida"
     end
   
     redirect_to new_sale_path
@@ -74,47 +76,56 @@ class SalesController < ApplicationController
   end
   
   def create
-    ActiveRecord::Base.transaction do
-      client_params = params[:sale].slice(:dni, :name, :phone, :email)
-      
-      @sale = Sale.new(sale_params)
-      @sale.user = current_user
+    begin
+      ActiveRecord::Base.transaction do
+        client_params = params[:sale].slice(:dni, :name, :phone, :email)
+        
+        @sale = Sale.new(sale_params)
+        @sale.user = current_user
 
-      @sale.client = find_or_create_client!(client_params)
-      sale_date_clock = sale_params[:sale_date]
-      sale_date_object = DateTime.parse(sale_date_clock)
-      @sale.sale_date = sale_date_object
-      
-      if session[:selected_products].present?
-        process_products!(session[:selected_products])
-        calculate_total_amount!
-        @sale.save!
-        session[:selected_products] = []
-        flash[:success] = "Venta creada exitosamente."
-        redirect_to sale_path(@sale)
-      else
         begin
+          @sale.client = find_or_create_client!(client_params)
+        rescue ActiveRecord::Rollback, ActiveRecord::RecordInvalid
+          if @sale.errors.any?
+            flash_messages_from_model(@sale)
+          end
+          @products= Product.active.available
+          
+          @selected_products = session[:selected_products] || []
+          render :new, status: :unprocessable_entity
+          return
+        end
+        if session[:selected_products].present?
+          process_products!(session[:selected_products])
+          calculate_total_amount!
+          @sale.save!
+          session[:selected_products] = []
+          flash[:success] = "Venta creada exitosamente."
+          redirect_to sale_path(@sale)
+          return
+        else
+          @sale.errors.add(:error, "No se seleccionaron productos para la venta.")
+          flash_messages_from_model(@sale)
           raise ActiveRecord::Rollback
-        rescue ActiveRecord::Rollback => e
-            flash.now[:error] = "No se seleccionaron productos para la venta."
-            @products= Product.active.available
-            @client = {
-              dni: params[:dni],
-              name: params[:name],
-              phone: params[:phone],
-              email: params[:email]
-            }
-            @selected_products = session[:selected_products] || []
-            render :new, status: :unprocessable_entity
-            return
         end
       end
+    rescue ActiveRecord::RecordInvalid, ActiveRecord::Rollback
+      if @sale.errors.any?
+        flash_messages_from_model(@sale)
+      end
     end
+    @products= Product.active.available
+            
+    @client = {
+      dni: params[:dni],
+      name: params[:name],
+      phone: params[:phone],
+      email: params[:email]
+    }
+            
+    @selected_products = session[:selected_products] || []
 
-    if @sale.errors.any?
-      flash_messages_from_model(@sale)
-      render :new, status: :unprocessable_entity
-    end
+    render :new, status: :unprocessable_entity
 
   end
 
@@ -146,7 +157,6 @@ class SalesController < ApplicationController
     @sale = Sale.find(params[:id])
   end
 
-  # Método para encontrar o crear un cliente
   def find_or_create_client!(params)
     @client = Client.find_or_initialize_by(dni: params[:dni])
     
@@ -155,10 +165,26 @@ class SalesController < ApplicationController
       phone: params[:phone],
       email: params[:email]
     )
-
+  
+    # Validar el cliente y agregar errores a la venta si no es válido
+    unless @client.valid?
+      @client.errors.full_messages.each do |error_message|
+        clean_msg = error_message.split(' ', 2).last
+        @sale.errors.add(:client, clean_msg)
+      end
+      raise ActiveRecord::Rollback
+    end
+  
     @client.save! if @client.new_record? || @client.changed?
   
     @client
+  rescue ActiveRecord::RecordInvalid => e
+    # Agregar cualquier error de guardado a la venta
+    e.record.errors.full_messages.each do |error_message|
+      clean_msg = error_message.split(' ', 2).last
+      @sale.errors.add(:client, clean_msg)
+    end
+    raise
   end
 
   def process_products!(selected_products)
@@ -168,7 +194,8 @@ class SalesController < ApplicationController
       product = Product.find(product_data['id'])
       
       if product.stock < product_data['quantity']
-        raise ActiveRecord::Rollback, "Stock insuficiente para #{product.name}"
+        @sale.errors.add(:process, "Stock insuficiente para #{product.name}")
+        raise ActiveRecord::Rollback
       end
 
       product.update!(stock: product.stock - product_data['quantity'])

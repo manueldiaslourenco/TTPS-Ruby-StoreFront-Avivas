@@ -34,7 +34,7 @@ class Product < ApplicationRecord
 
   def not_deleted
     if deleted_at.present?
-      errors.add(:base, "El producto ha sido eliminado y no se puede modificar.")
+      errors.add(:error, "El producto ha sido eliminado y no se puede modificar.")
     end
   end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_12_10_152401) do
+ActiveRecord::Schema[8.0].define(version: 2024_12_11_142225) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -46,10 +46,10 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_10_152401) do
   end
 
   create_table "clients", force: :cascade do |t|
-    t.string "dni", null: false
+    t.string "dni", limit: 10, null: false
     t.string "name", null: false
     t.string "email", null: false
-    t.string "phone", null: false
+    t.string "phone", limit: 10, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["dni"], name: "index_clients_on_dni", unique: true
@@ -102,7 +102,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_10_152401) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "username", null: false
-    t.string "phone", null: false
+    t.string "phone", limit: 10, null: false
     t.integer "role", default: 0, null: false
     t.datetime "deleted_at"
     t.index ["email"], name: "index_users_on_email", unique: true

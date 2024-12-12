@@ -28,7 +28,7 @@
   <tbody class="table-body-admin">
     <% @sales.each do |sale| %>
       <tr>
-        <td><%= sale.client.name %></td>
+        <td><%= sale.client.dni %></td>
         <% if sale.deleted_at.nil? %>
           <td>Realizada</td>
         <% else %>
