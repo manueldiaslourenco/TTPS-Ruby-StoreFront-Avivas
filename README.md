@@ -38,7 +38,7 @@ bundle install
 ```
 
 ### Configuración de Base de Datos
-La base de datos esta configurada y vacia lista para funcionar.
+La base de datos esta configurada, vacia y lista para funcionar.
 
 -Si se requiere configurar nuevamente.
 ```bash
@@ -47,7 +47,7 @@ rails db:create
 rails db:migrate
 ```
 
--Si despues de pruebas se busca una limpieza y reinicio.
+-Si despues de realizar pruebas se busca una limpieza y reinicio.
 ```bash
 rails db:reset
 ```
