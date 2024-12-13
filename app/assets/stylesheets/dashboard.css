@@ -1,0 +1,41 @@
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+    font-family: 'Roboto', 'Poppins', sans-serif;
+  }
+  
+  .dashboard-header {
+    font-size: 3.5rem;
+    font-weight: bold;
+    font-family: 'Roboto', 'Poppins', sans-serif;
+    position: absolute;
+    top: 8rem; /* Posición vertical del título */
+    text-align: center;
+    width: 100%;
+  }
+  
+  .dashboard-menu {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 4rem;
+  }
+  
+  .dashboard-menu a {
+    display: block;
+    padding: 1.5rem 2.5rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+    font-family: 'Roboto', 'Poppins', sans-serif;
+    color: #fff;
+    background-color: #7c736b;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .dashboard-menu a:hover {
+    background-color: #736355;
+  }

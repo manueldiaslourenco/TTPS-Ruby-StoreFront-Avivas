@@ -1,0 +1,84 @@
+<% content_for :title do %>
+  Detalle producto
+<% end %>
+
+<%= render 'shared/navbar_public' %>
+
+<%= render 'shared/handler_alerts' %>
+
+<div class="product-details-container">
+  <div class="product-image-carousel">
+    <div class="thumbnail-images">
+      <% @product.images.each do |image| %>
+        <%= image_tag image, alt: @product.name, class: 'thumbnail' %>
+      <% end %>
+    </div>
+    <div class="main-image">
+      <%= image_tag @product.images.first, alt: @product.name, width: 400, height: 400%>
+    </div>
+  </div>
+  
+  <div class="product-info-container">
+    <h1><%= @product.name %></h1>
+    <p><%= @product.description %></p>
+    <p class="price"><%= number_to_currency(@product.price, unit: "$", separator: ",", delimiter: ".", precision: 2) %></p>
+    
+    <div class="size-selector">
+      <label>Talle:</label>
+      <% if @product.size.present? %>
+        <button class="active"><%= @product.size %></button>
+      <% else %>
+        <span>No especificado</span>
+      <% end %>
+    </div>
+
+    <div class="color">
+      <label>Color:</label>
+      <% if @product.color.present? %>
+        <p><%= @product.color %></p>
+      <% else %>
+        <span>No especificado</span>
+      <% end %>
+    </div>
+    
+    <div class="stock-info">
+      <% if can?(:update, @product) %>
+        <%= form_with(model: @product, url: update_stock_product_path(@product), method: :patch, local: true) do |form| %>
+          <label>Stock:</label>
+          <%= form.number_field :stock, value: @product.stock %>
+          <%= form.submit "Actualizar", class: 'product-info-edit-stock-btn' %>
+        <% end %>
+      <% else %>
+        <p><label>Stock:</label><%= @product.stock %></p>
+      <% end %>
+      </p>
+    </div>
+    
+    <div class="actions">
+      <% if can?(:update, @product) %>
+        <%= link_to 'Editar', edit_product_path(@product), class: 'product-info-edit-btn' %>
+      <% end %>
+      <% if can?(:destroy, @product) %>
+        <%= form_with model: @product, url: product_path(@product), method: :delete do %>
+            <%= submit_tag "Eliminar", class: "product-info-delete-btn" %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="product-back-div">
+  <%= link_to 'Volver', request.referer || root_path, class: 'product-back-button' %>
+</div>
+
+<script>
+document.querySelectorAll('.thumbnail-images .thumbnail').forEach((thumbnail) => {
+  thumbnail.addEventListener('mouseover', () => {
+    document.querySelector('.main-image img').src = thumbnail.src;
+    document.querySelectorAll('.thumbnail-images .thumbnail').forEach((t) => {
+      t.classList.remove('active');
+    });
+    thumbnail.classList.add('active');
+  });
+});
+</script>

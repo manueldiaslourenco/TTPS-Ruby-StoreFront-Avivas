@@ -1,0 +1,65 @@
+<% content_for :title do %>
+  Crear Usuario
+<% end %>
+
+<%= render 'shared/navbar_admin' %>
+
+<%= render 'shared/handler_alerts' %>
+
+<div class="product-edit-form-container">
+  <h1 class="product-edit-form-title">Crear Usuario</h1>
+
+  <%= form_for(@user, url: admin_users_path) do |form| %>
+
+      <div class="product-edit-form-group">
+        <%= form.label :email, "Mail", class: "product-edit-form-label" %>
+        <%= form.email_field :email, autofocus: true, required: true, class: "product-edit-form-input" %>
+        <div class="product-edit-form-helper">
+          El mail elegido no debe estar en uso.
+        </div>
+      </div>
+
+      <div class="product-edit-form-group">
+        <%= form.label :username, "Nombre de usuario", class: "product-edit-form-label" %>
+        <%= form.text_field :username, required: true, class: "product-edit-form-input" %>
+        <div class="product-edit-form-helper">
+          El nombre de usuario elegido no debe estar en uso.
+        </div>
+      </div>
+
+      <div class="product-edit-form-group">
+        <%= form.label :phone, "Telefono", class: "product-edit-form-label" %>
+        <%= form.telephone_field :phone, required: true, class: "product-edit-form-input" %>
+        <div class="product-edit-form-helper">
+          El telefono no puede superar los 10 digitos.
+        </div>
+      </div>
+
+      <div class="product-edit-form-group">
+        <%= form.label :password, "Contraseña", class: "product-edit-form-label"  %> 
+        <%= form.password_field :password, class: "product-edit-form-input"  %>
+      </div>
+
+      <div class="product-edit-form-group">
+        <%= form.label :password_confirmation, "Confirmacion de la contraseña", class: "product-edit-form-label"%> 
+        <%= form.password_field :password_confirmation, class: "product-edit-form-input"%>
+      </div>
+
+      <div class="product-edit-form-group">
+        <%= form.label :role, "Rol", class: "product-edit-form-label" %>
+        <%= form.select :role,options_for_select(
+          current_user.manager? ? 
+            [["Empleado", 0], ["Gerente", 1]] : # Gerente: solo roles Empleado y Gerente
+            [["Empleado", 0], ["Gerente", 1], ["Administrador", 2]] # Admin: todos los roles
+        ),  prompt: "Seleccione un rol" , class: "product-edit-form-input", required: true%>
+      </div>
+
+      <div class="product-edit-form-group">
+        <%= form.submit "Crear", class: "product-edit-form-submit" %>
+      </div>
+  <% end %>
+</div>
+
+<div class="product-back-div">
+  <%= link_to 'Volver', request.referer || root_path, class: 'product-back-button' %>
+</div>

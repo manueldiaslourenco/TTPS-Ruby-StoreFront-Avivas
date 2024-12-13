@@ -1,0 +1,29 @@
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem 0;
+    font-family: 'Roboto', 'Poppins', sans-serif;
+  }
+  
+  .pagination .btn {
+    margin: 0 0.5rem;
+  }
+  
+  .pagination span {
+    margin: 0 1rem;
+  }
+
+  .btn-outline-primary{
+    font-weight: 600;
+    font-size: 18px;
+    color: #000;
+    cursor: pointer;
+    text-decoration: underline 3px;
+    text-decoration-color: #696969;
+  }
+
+  .btn-outline-primary:hover {
+    text-decoration-color: #000;
+    color: #000;
+  }

@@ -1,0 +1,58 @@
+<% content_for :title do %>
+    Listado Usuarios
+<% end %>
+
+<%= render 'shared/navbar_admin' %>
+
+<%= render 'shared/handler_alerts' %>
+
+<div class="header-admin">
+  <h1 class="h1-admin">Lista de Usuarios</h1>
+</div>
+
+<div>
+  <%= link_to 'Nuevo Usuario', new_admin_user_path, class: "btn-primary-admin" %>
+</div>
+
+<% if @users.present? %>
+  <table class="table-admin">
+    <thead class="table-head-admin">
+      <tr>
+        <th>Nombre de Usuario</th>
+        <th>Email</th>
+        <th>Teléfono</th>
+        <th>Rol</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody class="table-body-admin">
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user.username %></td>
+          <td><%= user.email %></td>
+          <td><%= user.phone %></td>
+          <td><%= user.role == 1 ? 'Gerente' : user.role == 2 ? 'Administrador' : 'Empleado' %></td>
+          <td>
+            <% if can?(:destroy, user) %>
+              <%= form_with url: delete_admin_user_path(user.id), method: :delete, local: true do |form| %>
+                <%= link_to 'Ver mas', show_admin_user_path(user), class: 'btn-admin-td btn-details-admin' %>
+                <%= form.submit "Desactivar", class: "btn-admin-td btn-delete-admin", data: { confirm: "¿Estás seguro de eliminar a este usuario?" } %>
+              <% end %>
+            <% else %>
+              <%= link_to 'Ver mas', show_admin_user_path(user), class: 'btn-admin-td btn-details-admin' %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <div class="pagination">
+    <%= link_to_previous_page @users, "Anterior", class: "btn btn-outline-primary" %>
+    <span>Página <%= @users.current_page %> de <%= @users.total_pages %></span>
+    <%= link_to_next_page @users, "Siguiente", class: "btn btn-outline-primary" %>
+  </div>
+
+<% else %>
+  <h2 class="h2-not-products">No hay usuarios registrados.</h2>
+<% end %>

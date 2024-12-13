@@ -1,0 +1,93 @@
+<% content_for :title do %>
+  Editar Producto
+<% end %>
+
+<%= render 'shared/navbar_admin' %>
+
+<%= render 'shared/handler_alerts' %>
+
+<div class="product-edit-form-container">
+  <h1 class="product-edit-form-title">Editar Producto</h1>
+
+  <%= form_with model: @product, class: "product-edit-form" do |form| %>
+    <div class="product-edit-form-group">
+      <%= form.label :name, "Nombre", class: "product-edit-form-label" %>
+      <%= form.text_field :name, required: true, value: @product.name, class: "product-edit-form-input" %>
+    </div>
+
+    <div class="product-edit-form-group">
+      <%= form.label :description, "Descripción", class: "product-edit-form-label" %>
+      <%= form.text_area :description, required: true, value: @product.description, class: "product-edit-form-text-area" %>
+    </div>
+
+    <div class="product-edit-form-group">
+      <%= form.label :price, "Precio", class: "product-edit-form-label" %>
+      <%= form.number_field :price, step: "0.01", required: true, value: @product.price, class: "product-edit-form-input" %>
+    </div>
+
+    <div class="product-edit-form-group">
+      <%= form.label :stock, "Stock", class: "product-edit-form-label" %>
+      <%= form.number_field :stock, step: "1", required: true, value: @product.stock, class: "product-edit-form-input" %>
+    </div>
+
+    <div class="product-edit-form-group">
+      <%= form.label :category_id, "Categoría", class: "product-edit-form-label" %>
+      <%= form.collection_select :category_id, Category.all, :id, :name, { prompt: "Selecciona una categoría" }, selected: @product.category_id, class: "product-edit-form-input" %>
+    </div>
+
+    <div class="product-edit-form-group">
+      <%= form.label :size, "Talle", class: "product-edit-form-label" %>
+      <%= form.text_field :size, value: @product.size, class: "product-edit-form-input" %>
+    </div>
+
+    <div class="product-edit-form-group">
+      <%= form.label :color, "Color", class: "product-edit-form-label" %>
+      <%= form.text_field :color, value: @product.color, class: "product-edit-form-input" %>
+    </div>
+
+    <div class="product-edit-form-group">
+      <%= form.label :images, "Selecciona nuevas imágenes", class: "product-edit-form-label" %>
+      <%= form.file_field :images, multiple: true, class: "product-edit-form-input" %>
+      <div class="product-edit-form-helper">
+        Las cantidad permitida de ingresar nuevas imagenes es 3. Si la cantidad ingresada mas la cargada superan este limite (3) las nuevas imagenes sobreescribiran las cargadas previamente.
+      </div>
+    </div>
+
+    <% if @product.images.attached? %>
+      <div>
+        <%= form.label :images, "Imagenes actuales cargadas ", class: "product-edit-form-label" %>
+      </div>
+      <div class="product-image-list">
+        <% @product.images.each do |image| %>
+          <% if image.persisted? %>
+            <div class="product-image-item">
+              <%= image_tag image, alt: @product.name, class: "product-image-preview" %>
+              <div>
+                <p class="product-image-filename">
+                <%= 
+                  file_name = image.filename.to_s
+                  if file_name.length > 10
+                    file_name[0, 5] + "..." + file_name[-7..-1]
+                  else
+                    file_name
+                  end
+                %>
+                </p>
+                <%= check_box_tag "product[remove_images][]", image.id, class: "form-checkbox" %>
+                Eliminar
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+
+    <div class="product-edit-form-group">
+      <%= form.submit "Actualizar", class: "product-edit-form-submit" %>
+    </div>
+  <% end %>
+</div>
+
+<div class="product-back-div">
+  <%= link_to 'Volver', request.referer || root_path, class: 'product-back-button' %>
+</div>

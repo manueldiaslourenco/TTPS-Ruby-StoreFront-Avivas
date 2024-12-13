@@ -1,0 +1,5 @@
+# Ignorar caché de Rails
+/tmp/cache/
+
+# Ignorar caché de bootsnap
+/tmp/bootsnap-cache/

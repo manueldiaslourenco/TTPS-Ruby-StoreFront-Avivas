@@ -1,0 +1,61 @@
+<% content_for :title do %>
+  Listado de ventas
+<% end %>
+
+<%= render 'shared/navbar_admin' %>
+
+<%= render 'shared/handler_alerts' %>
+
+<div class="header-admin">
+  <h1 class="h1-admin">Lista de Ventas</h1>
+</div>
+
+<div>
+  <%= link_to 'Nueva venta', new_sale_path, class: "btn-primary-admin" %>
+</div>
+
+<% if @sales.present? %>
+<table class="table-admin">
+  <thead class="table-head-admin">
+    <tr>
+      <th>Cliente</th>
+      <th>Estado</th>
+      <th>Fecha de Venta</th>
+      <th>Total</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody class="table-body-admin">
+    <% @sales.each do |sale| %>
+      <tr>
+        <td><%= sale.client.dni %></td>
+        <% if sale.deleted_at.nil? %>
+          <td>Realizada</td>
+        <% else %>
+          <td>Cancelada</td>
+        <% end %>
+        <td><%= sale.sale_date.strftime("%d/%m/%Y") %></td>
+        <td><%= number_to_currency(sale.total_amount, unit: "$", separator: ",", delimiter: ".", precision: 2)%></td>
+        <td>
+          <%= form_with model: sale, url: sale_path(sale), method: :delete, data: { confirm: "¿Estás seguro?" } do %>
+            <%= link_to 'Ver mas', sale_path(sale), class: 'btn-admin-td btn-details-admin' %>
+            <% if sale.deleted_at.nil? %>
+            <%= submit_tag "Cancelar", class: "btn-admin-td btn-delete-admin" %>
+            <% end %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="pagination">
+  <%= link_to_previous_page @sales, "Anterior", class: "btn btn-outline-primary" %>
+  <span>Página <%= @sales.current_page %> de <%= @sales.total_pages %></span>
+  <%= link_to_next_page @sales, "Siguiente", class: "btn btn-outline-primary" %>
+</div>
+
+<% else %>
+    <h2 class="h2-not-products">No hay ventas registradas.</h2>
+<% end %>
+
