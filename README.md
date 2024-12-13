@@ -2,9 +2,9 @@
 
 ## Descripción General
 
-El proyecto se basa en una aplicacion desarrollada en rails, con una parte publica que se denomina Storefront, la cara visible de la cadena de ropa de Avivas, donde se le permite a los visitantes ver un listado de productos y la informacion de los mismos. Por otra parte mas privada, se puede ver toda la gestion del inventario y administracion de la cadena de ropa, la cual necesita autenticacion y un rol adecuado para acceder a ciertas funciones.
+El proyecto se basa en una aplicación desarrollada en rails, con una parte publica que se denomina Storefront, la cara visible de la cadena de ropa de Avivas, donde se le permite a los visitantes ver un listado de productos y la información de los mismos. Por otra parte mas privada, se puede ver toda la gestión del inventario y administración de la cadena de ropa, la cual necesita autenticación y un rol adecuado para acceder a ciertas funciones.
 
-La aplicacion ofrece estas funcionalidades: 
+La aplicación ofrece estas funcionalidades: 
 
 - Administración de productos: listar productos, agregar producto, modificar producto, eliminar producto, cambiar stock, detalle del producto.
 - Administración de ventas: listar ventas, asentar venta, cancelar venta, detalle de venta.
@@ -12,7 +12,7 @@ La aplicacion ofrece estas funcionalidades:
 
 En la cadena existen tres distintos roles, los cuales son y pueden hacer lo siguiente:
 
-- Empleado: tiene acceso a la administración de productos y ventas, pero no puede gestionar usuarios, solo operaciones sobre el mismo como la edicion y el detalle de su informacion.
+- Empleado: tiene acceso a la administración de productos y ventas, pero no puede gestionar usuarios, solo operaciones sobre el mismo como la edición y el detalle de su información.
 - Gerente: tiene acceso a la administración de productos, ventas y puede gestionar usuarios, pero no puede realizar operaciones sobre usuarios con el rol de administrador.
 - Administrador: tiene acceso a todas las funcionalidades de la aplicación.
 
