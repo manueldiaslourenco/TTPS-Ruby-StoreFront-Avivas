@@ -27,9 +27,9 @@ class ApplicationController < ActionController::Base
     rescue ActiveRecord::RecordNotFound => exception
       render file: Rails.root.join("public", "404.html"), status: :not_found, layout: false
       return
-    #rescue StandardError => exception
-    #  render file: Rails.root.join("public", "500.html"), status: :internal_server_error, layout: false
-    #  return
+    rescue StandardError => exception
+      render file: Rails.root.join("public", "500.html"), status: :internal_server_error, layout: false
+      return
     end
   end
 

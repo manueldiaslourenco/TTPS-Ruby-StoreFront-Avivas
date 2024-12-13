@@ -11,6 +11,7 @@
 
   <div class="sale-details-section">
     <p><span class="sale-details-label">Venta:</span> <span class="sale-details-value"><%= @sale.id %></span></p>
+    <p><span class="sale-details-label">Empleado encargado:</span> <span class="sale-details-value"><%= @sale.user.username %></span></p>
     <% if @sale.deleted_at.nil? %>
       <p><span class="sale-details-label">Estado:</span> <span class="sale-details-value">Realizada</span></p>
     <% else %> 
