@@ -16,13 +16,13 @@ En la cadena existen tres distintos roles, los cuales son y pueden hacer lo sigu
 - Gerente: tiene acceso a la administración de productos, ventas y puede gestionar usuarios, pero no puede realizar operaciones sobre usuarios con el rol de administrador.
 - Administrador: tiene acceso a todas las funcionalidades de la aplicación.
 
-## Requerimientos del Sistema 💻
+## Requerimientos del Sistema 
 
 - Ruby versión 3.3.6
 - Rails versión 8.0.0
 - Base de datos: SQLite3
 
-## Configuración e Instalación 🛠️
+## Configuración e Instalación 
 
 ### Clonar el Repositorio
 
@@ -53,7 +53,7 @@ rails db:reset
 ```
 (Este reset realiza la configuraciond de la base de datos nuevamente y ademas aplica los seeds predefinidos.)
 
-## Gemas Utilizadas 💎
+## Gemas Utilizadas 
 
 ### Gemas
 
@@ -80,7 +80,7 @@ rails s
 
 Ir a `http://localhost:3000`
 
-## Seeds de Prueba 🌱
+## Seeds de Prueba 
 
 Los seeds incluyen los siguientes registros para pruebas:
 
