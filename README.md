@@ -73,7 +73,7 @@ rails db:reset
 - **Descripción**: Existe una entidad usuario para poder manejar todos los registros de las personas que trabajan en el sistema, para manejo de autenticacion, roles y acceso correcto a determinadas funcionalidades.
 
 #### Category
-- **Descripción**: Se creo una entidad categoria para facilitar y mejorar la forma en la que se filtran los productos. Al tener esta entidad y querer filtrar productos, podemos buscar todos los productos que tengan dicha categoria y realizar este filtrado de esa manera.
+- **Descripción**: Se creó una entidad categoria para facilitar y mejorar la forma en la que se filtran los productos. Al tener esta entidad y querer filtrar productos, podemos buscar todos los productos que tengan dicha categoria y realizar este filtrado de esa manera.
 
 #### Product
 - **Descripción**: [Explicación del modelo/entidad]
@@ -103,9 +103,9 @@ Ir a `http://localhost:3000`
 
 Los seeds incluyen los siguientes registros para pruebas:
 
-- [Registro 1]: [Descripción]
-- [Registro 2]: [Descripción]
-- [Registro 3]: [Descripción]
+- Usuario Administrador: Mail -> administrador1@example.com / contraseña -> Proyecto2024.ruby
+- Usuario Gerente: Mail -> gerente1@example.com / contraseña -> Proyecto2024.ruby
+- Usuario Empleado: Mail -> empleado1@example.com / contraseña -> Proyecto2024.ruby
 
 Para cargar los seeds:
 
