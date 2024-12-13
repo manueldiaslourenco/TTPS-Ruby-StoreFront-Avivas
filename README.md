@@ -51,7 +51,7 @@ rails db:migrate
 ```bash
 rails db:reset
 ```
-(Este reset realiza la configuraciond de la base de datos nuevamente y ademas aplica los seeds predefinidos.)
+(El comando "db:reset" realiza la configuracion de la base de datos nuevamente y aplica los seeds predefinidos.)
 
 ## Gemas Utilizadas 
 
