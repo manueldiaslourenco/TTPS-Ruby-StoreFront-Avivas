@@ -13,15 +13,7 @@
     end
 
 
-    User.create!(
-        email: 'manueldiasuala@gmail.com',
-        username: 'admin_user',
-        phone: '1234567890',
-        role: 2,
-        password: '45913067roco.now',             # Devise se encargará de encriptarla
-        password_confirmation: '45913067roco.now' # Devise verifica que coincidan
-    )
-
-
+    require_relative 'seeds/users/create_users'
     require_relative 'seeds/products/helpers'
     require_relative 'seeds/products/create_products'
+    require_relative 'seeds/sales/create_sales'
