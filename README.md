@@ -12,9 +12,9 @@ La aplicacion ofrece estas funcionalidades:
 
 En la cadena existen tres distintos roles, los cuales son y pueden hacer lo siguiente:
 
--Empleado: tiene acceso a la administración de productos y ventas, pero no puede gestionar usuarios, solo operaciones sobre el mismo como la edicion y el detalle de su informacion.
--Gerente: tiene acceso a la administración de productos, ventas y puede gestionar usuarios, pero no puede realizar operaciones sobre usuarios con el rol de administrador.
--Administrador: tiene acceso a todas las funcionalidades de la aplicación.
+- Empleado: tiene acceso a la administración de productos y ventas, pero no puede gestionar usuarios, solo operaciones sobre el mismo como la edicion y el detalle de su informacion.
+- Gerente: tiene acceso a la administración de productos, ventas y puede gestionar usuarios, pero no puede realizar operaciones sobre usuarios con el rol de administrador.
+- Administrador: tiene acceso a todas las funcionalidades de la aplicación.
 
 ## Requerimientos del Sistema 💻
 
