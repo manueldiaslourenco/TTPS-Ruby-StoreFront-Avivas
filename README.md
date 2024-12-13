@@ -59,15 +59,34 @@ rails db:reset
 
 | Gema | Versión | Propósito |
 |------|---------|-----------|
-| [nombre-gema] | [versión] | [Descripción de uso] |
+| devise | ~> 4.9 | El uso de esta gema fue facilitar el manejo de sesiones y autenticación de usuarios. |
+| strong_password | ~> 0.0.10 | El uso de esta gema fue generar validaciones extras a las cotraseñas de los usuarios al momento de autenticarse. |
+| ransack | ~> 4.2 | El uso de esta gema fue facilitar el manejo de los filtros para los listados de productos. |
+| cancancan | ~> 3.6 | El uso de esta gema fue facilitar el manejo de roles y permisos de usuarios. |
+| kaminari | ~> 1.2 | El uso de esta gema facilitar el manejo del paginado para los listados. |
 
 ## Estructura de la Base de Datos 
 
 ### Entidades
 
-#### [Nombre Entidad]
+#### User
+- **Descripción**: Existe una entidad usuario para poder manejar todos los registros de las personas que trabajan en el sistema, para manejo de autenticacion, roles y acceso correcto a determinadas funcionalidades.
+
+#### Category
+- **Descripción**: Se creo una entidad categoria para facilitar y mejorar la forma en la que se filtran los productos. Al tener esta entidad y querer filtrar productos, podemos buscar todos los productos que tengan dicha categoria y realizar este filtrado de esa manera.
+
+#### Product
 - **Descripción**: [Explicación del modelo/entidad]
 
+#### SaleItem
+- **Descripción**: [Explicación del modelo/entidad]
+
+#### Sale
+- **Descripción**: [Explicación del modelo/entidad]
+
+#### Client
+- **Descripción**: [Explicación del modelo/entidad]
+  
 ## Cómo Ejecutar la Aplicación 
 
 ### Servidor de Desarrollo
