@@ -103,9 +103,9 @@ Ir a `http://localhost:3000`
 
 Los seeds incluyen los siguientes registros para pruebas:
 
-- Usuario Administrador: Mail -> administrador1@example.com / contraseña -> Proyecto2024.ruby
-- Usuario Gerente: Mail -> gerente1@example.com / contraseña -> Proyecto2024.ruby
-- Usuario Empleado: Mail -> empleado1@example.com / contraseña -> Proyecto2024.ruby
+- Usuario Administrador: Mail -> `administrador1@example.com` / contraseña -> `Proyecto2024.ruby`
+- Usuario Gerente: Mail -> `gerente1@example.com` / contraseña -> `Proyecto2024.ruby`
+- Usuario Empleado: Mail -> `empleado1@example.com` / contraseña -> `Proyecto2024.ruby`
 
 Para cargar los seeds:
 
