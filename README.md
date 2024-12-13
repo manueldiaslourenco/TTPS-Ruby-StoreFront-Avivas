@@ -1,24 +1,103 @@
-# README
+# Proyecto Cursada Taller de Tecnologias de Produccion de Software - Opción Ruby
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Descripción General 🚀 
 
-Things you may want to cover:
+[Escribe aquí una descripción detallada de tu proyecto, su propósito, funcionalidades principales y problema que resuelve]
 
-* Ruby version
+## Requerimientos del Sistema 💻
 
-* System dependencies
+- Ruby versión [x.x.x]
+- Rails versión [x.x.x]
+- Base de datos: PostgreSQL/MySQL [versión específica si aplica]
 
-* Configuration
+## Configuración e Instalación 🛠️
 
-* Database creation
+### Clonar el Repositorio
 
-* Database initialization
+```bash
+git clone [URL del repositorio]
+cd [nombre-del-proyecto]
+```
 
-* How to run the test suite
+### Instalación de Dependencias
 
-* Services (job queues, cache servers, search engines, etc.)
+```bash
+bundle install
+```
 
-* Deployment instructions
+### Configuración de Base de Datos
 
-* ...
+```bash
+rails db:create
+rails db:migrate
+```
+
+## Gemas Utilizadas 💎
+
+### Gemas de Desarrollo
+
+| Gema | Versión | Propósito |
+|------|---------|-----------|
+| [nombre-gema] | [versión] | [Descripción de uso] |
+
+### Gemas de Producción
+
+| Gema | Versión | Propósito |
+|------|---------|-----------|
+| [nombre-gema] | [versión] | [Descripción de uso] |
+
+## Estructura de la Base de Datos 🗃️
+
+### Entidades
+
+#### [Nombre Entidad 1]
+- **Descripción**: [Explicación del modelo/entidad]
+- **Atributos**:
+  - `campo1`: [tipo] - [descripción]
+  - `campo2`: [tipo] - [descripción]
+
+#### [Nombre Entidad 2]
+- **Descripción**: [Explicación del modelo/entidad]
+- **Atributos**:
+  - `campo1`: [tipo] - [descripción]
+  - `campo2`: [tipo] - [descripción]
+
+## Cómo Ejecutar la Aplicación 🚀
+
+### Servidor de Desarrollo
+
+```bash
+rails server
+# o 
+rails s
+```
+
+Navega a `http://localhost:3000`
+
+### Ejecutar Tests
+
+```bash
+rails test
+```
+
+## Seeds de Prueba 🌱
+
+Los seeds incluyen los siguientes registros para pruebas:
+
+- [Registro 1]: [Descripción]
+- [Registro 2]: [Descripción]
+- [Registro 3]: [Descripción]
+
+Para cargar los seeds:
+
+```bash
+rails db:seed
+```
+
+## Contribución 🤝
+
+[Instrucciones para contribuir al proyecto, si aplica]
+
+## Licencia 📄
+
+[Tipo de licencia]
