@@ -70,22 +70,22 @@ rails db:reset
 ### Entidades
 
 #### User
-- **Descripción**: Existe una entidad usuario para poder manejar todos los registros de las personas que trabajan en el sistema, para manejo de autenticacion, roles y acceso correcto a determinadas funcionalidades.
+- **Descripción**: Se creó una entidad ***User*** para modelar el registro de personas que trabajan en el sistema, manejo de autenticación, roles y acceso correcto a determinadas funcionalidades.
 
 #### Category
-- **Descripción**: Se creó una entidad categoria para facilitar y mejorar la forma en la que se filtran los productos. Al tener esta entidad y querer filtrar productos, podemos buscar todos los productos que tengan dicha categoria y realizar este filtrado de esa manera.
+- **Descripción**: Se creó una entidad ***Category*** para modelar las categorías de un producto. Tiene como finalidad facilitar y mejorar la forma en la que se filtran los productos. Cuando se necesite filtrar productos por una categoría específica, se buscan todos los productos que tengan la categoría deseada y se realiza el filtrado.
 
 #### Product
-- **Descripción**: [Explicación del modelo/entidad]
+- **Descripción**: La entidad ***Product*** tiene como finalidad modelar los productos de la cadena de ropa, la cual, a través de Active Storage de Rails, se relaciona con imágenes dando una imagen mas grafica de su representación. Dicha entidad contiene toda la información necesaria para la representación de un producto de ropa.
 
 #### SaleItem
-- **Descripción**: [Explicación del modelo/entidad]
+- **Descripción**: Se creó una entidad ***SaleItem*** para modelar ítems de una venta, generando la relación entre ventas y productos. De esta forma, los productos pueden tener muchas ventas y las ventas muchos productos. También se guarda el precio unitario del producto al momento en que se efectúa la venta y la cantidad solicitada del mismo. Esto se pensó para el caso de que el precio del producto se modifique, permitiendo conservar el valor registrado en la venta.
 
 #### Sale
-- **Descripción**: [Explicación del modelo/entidad]
+- **Descripción**: La entidad ***Sale*** representa las ventas. Contiene una fecha de realización, la cual no puede ser futura, un monto total, el empleado que realizó la venta, un cliente, y uno o más productos que provienen de la relación con la entidad ***SaleItem*** previamente mencionada.
 
 #### Client
-- **Descripción**: [Explicación del modelo/entidad]
+- **Descripción**: Se creó una entidad ***Client*** para representar a los clientes, almacenando su información necesaria. La decisión de crear esta entidad es para poder tener la representación de los clientes y su información guardada aparte de la venta. Al crearse una venta, se ingresan los datos del cliente. Si el DNI ingresado se encuentra en el sistema, se actualiza toda la información ingresada, reemplazando la almacenada previamente. Si no se encuentra, se crea y registra en el sistema.
   
 ## Cómo Ejecutar la Aplicación 
 
