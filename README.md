@@ -101,7 +101,9 @@ Ir a `http://localhost:3000`
 
 ## Seeds de Prueba 
 
-Los seeds incluyen los siguientes registros para pruebas:
+Los seeds incluyen registros de categorias, productos, ventas y usuarios.
+
+Registros de usuarios para pruebas:
 
 - Usuario Administrador: Mail -> `administrador1@example.com` / contraseña -> `Proyecto2024.ruby`
 - Usuario Gerente: Mail -> `gerente1@example.com` / contraseña -> `Proyecto2024.ruby`
@@ -112,4 +114,3 @@ Para cargar los seeds:
 ```bash
 rails db:seed
 ```
-
