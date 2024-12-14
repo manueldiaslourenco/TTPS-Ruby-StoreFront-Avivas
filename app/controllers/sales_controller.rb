@@ -54,7 +54,7 @@ class SalesController < ApplicationController
           end
         else
           # Si el producto no está en la lista, agregarlo
-          if product.stock - quantity > 0
+          if product.stock - quantity >= 0
             session[:selected_products] << { id: product.id, name: product.name, quantity: quantity, stock_available: product.stock }
           else
             flash[:error] = "La cantidad seleccionada supera el stock disponible."
